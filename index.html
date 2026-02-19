@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>FY27 Partner Input Session — Day 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00A9E0;
+            --usa-blue: #00549F;
+            --navy: #101F36;
+            --slate: #4C5768;
+            --pond: #878F9A;
+            --cream: #F4EFE3;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--cream); color: var(--navy); line-height: 1.6; }
+
+        /* ── NAV ── */
+        nav {
+            background: var(--navy); padding: 0 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3); height: 64px;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 16px; }
+        .nav-logo svg { height: 40px; width: auto; }
+        .logo-divider { width: 1px; height: 32px; background: var(--slate); }
+        .nav-session { color: var(--pond); font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* ── HERO ── */
+        .hero {
+            background: var(--navy); padding: 52px 40px 44px;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 4px; background: linear-gradient(90deg, var(--usa-blue), var(--cyan));
+        }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(0,169,224,0.15); border: 1px solid rgba(0,169,224,0.3);
+            color: var(--cyan); font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 5px 12px; border-radius: 3px; margin-bottom: 14px;
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600; color: var(--white); line-height: 1.2;
+            max-width: 680px; margin-bottom: 6px;
+        }
+        .hero h1 span { color: var(--cyan); }
+        .hero-meta { color: var(--pond); font-size: 0.82rem; margin-bottom: 32px; }
+        .stats-row { display: flex; gap: 36px; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-num { font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; color: var(--cyan); line-height: 1; }
+        .stat-label { font-size: 0.68rem; font-weight: 600; color: var(--pond); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        /* ── SESSION TAB NAV ── */
+        .session-nav {
+            background: var(--white); border-bottom: 2px solid var(--cream);
+            display: flex; overflow-x: auto; scrollbar-width: none;
+        }
+        .session-nav::-webkit-scrollbar { display: none; }
+        .session-tab {
+            background: transparent; border: none;
+            border-bottom: 3px solid transparent;
+            padding: 0; cursor: pointer; white-space: nowrap;
+            transition: all 0.2s; margin-bottom: -2px;
+            display: flex; flex-direction: column; align-items: flex-start;
+            padding: 14px 28px 12px;
+            min-width: 160px;
+        }
+        .session-tab:hover { background: rgba(0,84,159,0.04); border-bottom-color: rgba(0,169,224,0.3); }
+        .session-tab.active { border-bottom-color: var(--cyan); background: rgba(0,169,224,0.04); }
+        .tab-time { font-size: 0.62rem; font-weight: 600; color: var(--pond); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+        .tab-title { font-family: 'Oswald', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; text-align: left; }
+        .session-tab.active .tab-title { color: var(--usa-blue); }
+        .tab-speakers { font-size: 0.62rem; color: var(--pond); margin-top: 3px; }
+        .session-tab.active .tab-speakers { color: var(--cyan); }
+
+        /* ── PANELS ── */
+        .panels { max-width: 1100px; margin: 0 auto; padding: 48px 40px; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        /* ── PANEL HEADER ── */
+        .panel-header { margin-bottom: 32px; }
+        .panel-eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 4px; }
+        .panel-title { font-family: 'Oswald', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; color: var(--navy); line-height: 1.1; margin-bottom: 6px; }
+        .panel-speakers-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .speaker-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--white); border: 1px solid rgba(0,84,159,0.15);
+            border-radius: 20px; padding: 4px 12px 4px 6px;
+            font-size: 0.72rem; font-weight: 600; color: var(--slate);
+        }
+        .speaker-dot { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Oswald', sans-serif; font-size: 0.65rem; font-weight: 700; color: var(--white); }
+        .panel-summary { color: var(--slate); font-size: 0.9rem; max-width: 720px; line-height: 1.7; }
+
+        /* ── STAT CARDS ── */
+        .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 12px; margin-bottom: 28px; }
+        .stat-card { background: var(--white); border-radius: 8px; padding: 16px; text-align: center; box-shadow: 0 2px 6px rgba(16,31,54,0.06); border-top: 3px solid var(--cyan); }
+        .stat-card.blue { border-top-color: var(--usa-blue); }
+        .stat-card.navy { border-top-color: var(--navy); }
+        .sc-num { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--navy); line-height: 1; }
+        .sc-label { font-size: 0.7rem; color: var(--slate); margin-top: 5px; line-height: 1.4; }
+
+        /* ── QUOTE CARDS ── */
+        .quotes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .quote-card { background: var(--white); border-radius: 10px; padding: 22px; border-left: 4px solid var(--cyan); box-shadow: 0 2px 8px rgba(16,31,54,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .quote-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,31,54,0.1); }
+        .quote-card.featured { border-left-color: var(--usa-blue); background: linear-gradient(135deg, #fff 0%, #f0f6ff 100%); }
+        .quote-mark { font-family: 'Oswald', sans-serif; font-size: 2.4rem; color: var(--cyan); line-height: 0.6; margin-bottom: 10px; display: block; opacity: 0.3; }
+        .quote-text { font-size: 0.87rem; color: var(--slate); line-height: 1.7; font-style: italic; margin-bottom: 14px; }
+        .quote-attr { font-size: 0.7rem; font-weight: 700; color: var(--pond); text-transform: uppercase; letter-spacing: 1px; }
+        .quote-attr span { color: var(--usa-blue); }
+
+        /* ── INSIGHTS ── */
+        .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 28px; }
+        .insight-box { background: var(--white); border-radius: 8px; padding: 18px; box-shadow: 0 2px 6px rgba(16,31,54,0.06); }
+        .insight-icon { font-size: 1.3rem; margin-bottom: 8px; }
+        .insight-box h4 { font-family: 'Oswald', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .insight-box p { font-size: 0.81rem; color: var(--slate); line-height: 1.6; }
+
+        /* ── HIGHLIGHT BOX ── */
+        .highlight-box { background: linear-gradient(135deg, var(--usa-blue), var(--navy)); border-radius: 10px; padding: 24px 28px; margin-bottom: 28px; }
+        .highlight-box h4 { font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600; color: var(--cyan); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .highlight-box p { font-size: 0.85rem; line-height: 1.7; color: rgba(255,255,255,0.9); }
+
+        /* ── TAKEAWAY BAR ── */
+        .takeaway-bar { background: var(--navy); border-radius: 10px; padding: 22px 26px; margin-top: 4px; margin-bottom: 28px; }
+        .takeaway-bar h4 { font-family: 'Oswald', sans-serif; font-size: 0.76rem; font-weight: 600; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .takeaway-bar ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+        .takeaway-bar li { color: var(--white); font-size: 0.81rem; padding-left: 16px; position: relative; line-height: 1.5; }
+        .takeaway-bar li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); }
+
+        /* ── TIMELINE ── */
+        .timeline { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+        .timeline-item { display: flex; gap: 16px; align-items: flex-start; }
+        .timeline-dot { width: 32px; height: 32px; background: var(--usa-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--white); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.78rem; }
+        .timeline-content { background: var(--white); border-radius: 8px; padding: 14px 18px; flex: 1; box-shadow: 0 2px 6px rgba(16,31,54,0.06); }
+        .timeline-content h4 { font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+        .timeline-content p { font-size: 0.81rem; color: var(--slate); line-height: 1.6; }
+
+        /* ── SECTION LABEL ── */
+        .section-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--pond); margin-bottom: 14px; margin-top: 28px; padding-bottom: 6px; border-bottom: 1px solid rgba(135,143,154,0.2); }
+
+        /* ── TWO-COL LAYOUT ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+        @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+        /* ── SPEAKER BLOCK (within panel) ── */
+        .speaker-block { background: var(--white); border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(16,31,54,0.06); margin-bottom: 28px; }
+        .speaker-block-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--cream); }
+        .sb-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; color: var(--white); flex-shrink: 0; }
+        .sb-name { font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600; color: var(--navy); }
+        .sb-role { font-size: 0.72rem; color: var(--pond); margin-top: 1px; }
+
+        /* ── DATA TABLE ── */
+        .data-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(16,31,54,0.06); }
+        .data-table th { background: var(--navy); color: var(--white); font-family: 'Oswald', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; }
+        .data-table td { padding: 10px 14px; font-size: 0.81rem; color: var(--slate); border-bottom: 1px solid var(--cream); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:nth-child(even) td { background: rgba(244,239,227,0.4); }
+        .trend-up { color: #1a9e4a; font-weight: 700; }
+        .trend-down { color: #c0392b; font-weight: 700; }
+        .trend-flat { color: var(--pond); font-weight: 700; }
+
+        /* ── PROGRAM CARDS ── */
+        .program-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .program-card { background: var(--cream); border-radius: 10px; padding: 24px; border-top: 3px solid var(--cyan); }
+        .program-card.p2 { border-top-color: var(--usa-blue); }
+        .program-card.p3 { border-top-color: var(--navy); }
+        .program-num { font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--pond); opacity: 0.35; line-height: 1; margin-bottom: 6px; }
+        .program-card h3 { font-family: 'Oswald', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 7px; }
+        .program-card p { font-size: 0.8rem; color: var(--slate); line-height: 1.6; margin-bottom: 12px; }
+        .program-tag { display: inline-block; background: var(--white); color: var(--usa-blue); font-size: 0.66rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+
+        /* ── AVATAR COLORS ── */
+        .av-fred    { background: linear-gradient(135deg, #101F36, #00549F); }
+        .av-angie   { background: linear-gradient(135deg, #00549F, #101F36); }
+        .av-robert  { background: linear-gradient(135deg, #4C5768, #101F36); }
+        .av-peter   { background: linear-gradient(135deg, #101F36, #4C5768); }
+        .av-chelsea { background: linear-gradient(135deg, #00549F, #00A9E0); }
+        .av-leah    { background: linear-gradient(135deg, #00A9E0, #00549F); }
+        .av-chris   { background: linear-gradient(135deg, #00549F, #00A9E0); }
+        .av-malcolm { background: linear-gradient(135deg, #878F9A, #4C5768); }
+        .av-dan     { background: linear-gradient(135deg, #101F36, #00A9E0); }
+        .av-janette { background: linear-gradient(135deg, #00A9E0, #101F36); }
+
+        /* ── FOOTER ── */
+        footer { background: var(--navy); padding: 32px 40px; text-align: center; }
+        .footer-logo { display: flex; justify-content: center; margin-bottom: 12px; }
+        .footer-logo svg { height: 50px; width: auto; }
+        footer p { color: var(--pond); font-size: 0.75rem; margin-top: 6px; }
+
+        @media (max-width: 680px) {
+            nav, .hero, .panels, footer { padding-left: 20px; padding-right: 20px; }
+            .session-tab { min-width: 130px; padding: 12px 16px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">
+        <!-- Brand USA Logo: White/LightBlue — for dark backgrounds -->
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 415.12 296.38">
+          <defs><style>.cls-1{fill:#fff;}.cls-1,.cls-2{stroke-width:0px;}.cls-2{fill:#00a9e0;}</style></defs>
+          <g><g>
+            <path class="cls-1" d="M88.18,170.68v-48.75h25.5v48.13c0,11.32,5.47,18.16,15.55,18.16s15.55-6.84,15.55-18.16v-48.13h25.5v48.75c0,25.12-14.05,39.43-41.04,39.43s-41.04-14.3-41.04-39.43Z"/>
+            <path class="cls-1" d="M295.47,121.42h-31.22l-15.22,42.79c2.77,4.63,4.17,10.2,4.17,16.67,0,12.02-5.04,21.52-14.03,27.61h19.11l5.47-16.29h31.96l5.47,16.29h25.75l-31.47-87.06ZM270.34,172.29l9.33-27.74,9.33,27.74h-18.66Z"/>
+          </g>
+          <path class="cls-1" d="M213.15,120.31c-22.76,0-37.19,10.07-37.19,28.11,0,34.2,46.02,22.14,46.02,34.82,0,4.1-3.23,6.47-12.06,6.47-9.57,0-18.89-2.86-26.97-8.45l-7.46,21.03c9,5.03,20.32,7.81,34.44,7.81,23.51,0,36.94-11.19,36.94-29.23,0-34.58-46.02-22.64-46.02-34.2,0-3.98,3.98-5.97,12.44-5.97s16.12,2.47,21.47,6.31l7.21-20.32c-7.42-3.81-17.46-6.39-28.81-6.39Z"/>
+          </g>
+          <g>
+            <path class="cls-2" d="M88.13,88.47h11.74c2.91,0,5.12.75,6.61,2.23,1.16,1.15,1.73,2.58,1.73,4.29v.07c0,.72-.09,1.36-.27,1.91-.18.55-.42,1.05-.72,1.5-.3.44-.65.84-1.05,1.17-.4.34-.83.62-1.28.87,1.47.55,2.62,1.31,3.47,2.26.84.95,1.26,2.27,1.26,3.96v.07c0,1.16-.22,2.17-.67,3.04-.45.87-1.08,1.59-1.91,2.17-.83.58-1.83,1.01-3,1.3-1.17.29-2.46.43-3.88.43h-12.03v-25.28ZM102.68,95.93c0-.84-.31-1.48-.94-1.92-.63-.44-1.53-.66-2.71-.66h-5.49v5.31h5.13c1.23,0,2.2-.21,2.93-.63.72-.42,1.08-1.09,1.08-2.03v-.07ZM104.09,106.06c0-.84-.33-1.51-.97-2-.65-.49-1.7-.74-3.14-.74h-6.43v5.56h6.61c1.23,0,2.19-.22,2.89-.67.7-.44,1.05-1.14,1.05-2.08v-.07Z"/>
+            <path class="cls-2" d="M114.2,88.47h11.56c3.2,0,5.66.85,7.37,2.56,1.44,1.44,2.17,3.37,2.17,5.78v.07c0,2.05-.5,3.71-1.5,5-1,1.29-2.31,2.23-3.92,2.83l6.18,9.03h-6.5l-5.42-8.09h-4.37v8.09h-5.56v-25.28ZM125.4,100.75c1.37,0,2.42-.32,3.16-.97.73-.65,1.1-1.51,1.1-2.59v-.07c0-1.2-.39-2.1-1.16-2.69-.77-.6-1.84-.9-3.21-.9h-5.53v7.22h5.63Z"/>
+            <path class="cls-2" d="M148.98,88.29h5.13l10.83,25.46h-5.81l-2.31-5.67h-10.69l-2.31,5.67h-5.67l10.83-25.46ZM154.83,103.17l-3.36-8.2-3.36,8.2h6.72Z"/>
+            <path class="cls-2" d="M168.12,88.47h5.13l11.85,15.56v-15.56h5.49v25.28h-4.73l-12.24-16.07v16.07h-5.49v-25.28Z"/>
+            <path class="cls-2" d="M196.65,88.47h9.86c1.97,0,3.79.32,5.43.96,1.65.64,3.07,1.52,4.26,2.65,1.19,1.13,2.11,2.46,2.76,3.99.65,1.53.97,3.18.97,4.97v.07c0,1.78-.33,3.44-.97,4.98-.65,1.54-1.57,2.88-2.76,4.01-1.19,1.13-2.61,2.02-4.26,2.67-1.65.65-3.46.98-5.43.98h-9.86v-25.28ZM202.21,93.53v15.17h4.3c1.13,0,2.17-.18,3.11-.54.94-.36,1.74-.87,2.4-1.55s1.18-1.46,1.55-2.37.56-1.93.56-3.06v-.07c0-1.1-.19-2.12-.56-3.05s-.89-1.74-1.55-2.41-1.46-1.19-2.4-1.56c-.94-.37-1.97-.56-3.11-.56h-4.3Z"/>
+          </g>
+        </svg>
+        <div class="logo-divider"></div>
+        <div class="nav-session">FY27 Partner Input · Day 1 · Feb 19, 2026</div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-tag">February 19, 2026 · Internal</div>
+    <h1>FY27 Strategic Planning<br><span>Partner Input Session — Day 1</span></h1>
+    <p class="hero-meta">~75 partners · 5 sessions · Strategy, research, global marketing & AI</p>
+    <div class="stats-row">
+        <div class="stat"><div class="stat-num">62.4M</div><div class="stat-label">Int'l arrivals thru Nov '25</div></div>
+        <div class="stat"><div class="stat-num">$685M</div><div class="stat-label">Visitor spend per day</div></div>
+        <div class="stat"><div class="stat-num">25:1</div><div class="stat-label">ROI goal</div></div>
+        <div class="stat"><div class="stat-num">2026</div><div class="stat-label">Once-in-a-generation</div></div>
+    </div>
+</div>
+
+<!-- SESSION NAV -->
+<div class="session-nav">
+    <button class="session-tab active" onclick="switchPanel('welcome')">
+        <div class="tab-time">1:00 – 1:30</div>
+        <div class="tab-title">Welcome &amp; Program Overview</div>
+        <div class="tab-speakers">Fred Dixon · Angie Briggs · Robert O'Leary</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('publicaffairs')">
+        <div class="tab-time">1:30 – 1:45</div>
+        <div class="tab-title">Public Affairs Update</div>
+        <div class="tab-speakers">Peter Dodge</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('research')">
+        <div class="tab-time">1:45 – 2:15</div>
+        <div class="tab-title">Market Insights &amp; Research</div>
+        <div class="tab-speakers">Chelsea Benitez</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('platform')">
+        <div class="tab-time">2:30 – 4:00</div>
+        <div class="tab-title">America the Beautiful Platform</div>
+        <div class="tab-speakers">Leah · Chris · Malcolm · Dan</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('ai')">
+        <div class="tab-time">4:15 – 5:00</div>
+        <div class="tab-title">AI &amp; Innovation</div>
+        <div class="tab-speakers">Janette Roush</div>
+    </button>
+</div>
+
+<!-- PANELS -->
+<div class="panels">
+
+    <!-- 1. WELCOME & OVERVIEW -->
+    <div class="panel active" id="panel-welcome">
+        <div class="panel-header">
+            <div class="panel-eyebrow">1:00 – 1:30 PM · Session 1</div>
+            <div class="panel-title">Welcome and Program Overview</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-fred">F</span>Fred Dixon, President &amp; CEO</span>
+                <span class="speaker-chip"><span class="speaker-dot av-angie">A</span>Angie Briggs, Brand USA</span>
+                <span class="speaker-chip"><span class="speaker-dot av-robert">R</span>Robert O'Leary, Dept. of Commerce</span>
+            </div>
+            <p class="panel-summary">Fred set the strategic context for FY27: a constrained budget, a once-in-a-generation event year, and the discipline to do more with less. Special guest Robert O'Leary from the Department of Commerce framed the Trump administration's full investment in making 2026 the most significant inbound tourism moment in American history.</p>
+        </div>
+
+        <!-- Fred -->
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-fred">F</div>
+                <div><div class="sb-name">Fred Dixon</div><div class="sb-role">President &amp; CEO, Brand USA</div></div>
+            </div>
+
+            <div class="section-label" style="margin-top:0">Budget Reality</div>
+            <div class="stat-cards">
+                <div class="stat-card"><div class="sc-num">$158M</div><div class="sc-label">Current year — smallest budget in ~5 years (matching funds at 20%)</div></div>
+                <div class="stat-card blue"><div class="sc-num">$100M</div><div class="sc-label">FY27 projected if no legislative change</div></div>
+                <div class="stat-card"><div class="sc-num">25:1</div><div class="sc-label">ROI north star — every dollar must stretch</div></div>
+                <div class="stat-card navy"><div class="sc-num">11</div><div class="sc-label">Consecutive clean financial audits, no management letters</div></div>
+            </div>
+
+            <div class="quotes-grid">
+                <div class="quote-card featured">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">You can't boil the ocean. You have to be more strategic and narrower in focus. You are going to stretch that budget to within an inch of its life. We already are.</p>
+                    <div class="quote-attr"><span>Fred Dixon</span></div>
+                </div>
+                <div class="quote-card">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">There is no hand wringing. We have a tremendous opportunity in front of us. I am bullish on the future.</p>
+                    <div class="quote-attr"><span>Fred Dixon</span></div>
+                </div>
+            </div>
+
+            <div class="section-label">What's New at Brand USA</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🎨</div><h4>New Visual Identity</h4><p>Removed the dots. America the Beautiful is the unified platform across all channels and campaigns.</p></div>
+                <div class="insight-box"><div class="insight-icon">🌍</div><h4>Travel Week Expansion</h4><p>Record UK/Europe. Record India (January). Inaugural Brazil next month. Amsterdam this fall. ~1,000 CBP Global Entry interviews in New Zealand/Australia underway.</p></div>
+                <div class="insight-box"><div class="insight-icon">🏛️</div><h4>Visit USA Act</h4><p>Bipartisan legislation introduced in both chambers — short-term funding fix ahead of full reauthorization through September 2027.</p></div>
+                <div class="insight-box"><div class="insight-icon">🤝</div><h4>New Teams Built</h4><p>Communications and earned media team built from the ground up. Expanded public affairs. New AI and innovation function established.</p></div>
+            </div>
+
+            <div class="section-label">Market Context</div>
+            <div class="stat-cards">
+                <div class="stat-card"><div class="sc-num">4%</div><div class="sc-label">Global outbound international travel growth in 2025</div></div>
+                <div class="stat-card"><div class="sc-num">$700M</div><div class="sc-label">International visitor spend in the U.S. per day</div></div>
+                <div class="stat-card blue"><div class="sc-num">#1</div><div class="sc-label">Mexico — now the top inbound market for the United States</div></div>
+                <div class="stat-card"><div class="sc-num">10</div><div class="sc-label">Active paid consumer media markets for highest ROI</div></div>
+            </div>
+        </div>
+
+        <!-- Robert -->
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-robert">R</div>
+                <div><div class="sb-name">Robert O'Leary</div><div class="sb-role">Deputy Assistant Secretary for Travel &amp; Tourism, U.S. Dept. of Commerce / NTTO</div></div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>The Administration's Position</h4>
+                <p>"I don't believe the future of travel has ever been brighter — the travel industry is on the cusp of what I expect to be an amazing decade." The Trump administration has invested over $1 billion in an all-of-government approach to World Cup 2026 alone. The goal: turn billions watching into millions visiting, and millions attending into repeat visitors.</p>
+            </div>
+
+            <div class="stat-cards">
+                <div class="stat-card"><div class="sc-num">$1B+</div><div class="sc-label">Federal investment in World Cup safety, security &amp; visitor experience</div></div>
+                <div class="stat-card blue"><div class="sc-num">80+</div><div class="sc-label">Countries where visa wait times reduced from 1+ year to under 60 days</div></div>
+                <div class="stat-card navy"><div class="sc-num">1997</div><div class="sc-label">Last time state-by-state overseas visitor spending was calculated — now updated for all 50 states</div></div>
+            </div>
+
+            <div class="quotes-grid">
+                <div class="quote-card featured">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">Twenty twenty six is more than just a major event year. It's a once-in-a-generation marketing moment that we can use as a springboard for years to come.</p>
+                    <div class="quote-attr"><span>Robert O'Leary</span> · Dept. of Commerce</div>
+                </div>
+                <div class="quote-card">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">Travel is not just an industry; it's an economic engine, a job creator, and a bridge between people and nations.</p>
+                    <div class="quote-attr"><span>Robert O'Leary</span></div>
+                </div>
+            </div>
+
+            <div class="section-label">Mega-Event Pipeline</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">⚽</div><h4>FIFA World Cup 2026</h4><p>Largest sporting event in American history. All-of-government coordination. Visa backlog cleared in 80+ countries.</p></div>
+                <div class="insight-box"><div class="insight-icon">🇺🇸</div><h4>America 250</h4><p>Communities across the country creating extraordinary travel opportunities throughout the year. Freedom 250 Initiative as the national platform.</p></div>
+                <div class="insight-box"><div class="insight-icon">🏅</div><h4>LA 2028 Olympics</h4><p>Multi-year runway. Builds international awareness and drives advance trip planning across the country.</p></div>
+                <div class="insight-box"><div class="insight-icon">🏉</div><h4>Rugby World Cups + 2034 Winter Olympics</h4><p>Upcoming Men's and Women's Rugby World Cups. 2034 Winter Olympics in Utah. Potential World Expo 2035 Miami.</p></div>
+            </div>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>Session 1 Takeaways</h4>
+            <ul>
+                <li>Smaller budget demands sharper focus — 25:1 ROI is the guiding metric for every decision</li>
+                <li>Canada consumer media on pause; trade programs and SEM continue</li>
+                <li>Federal government invested $1B+ in World Cup — full alignment with Brand USA priorities</li>
+                <li>Visa wait times now under 60 days in 80+ countries — a real, concrete win for inbound travel</li>
+                <li>National Tourism Strategy process begins 2026 — opportunity for industry input</li>
+                <li>Visit USA Act is the near-term legislative lever to watch</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 2. PUBLIC AFFAIRS -->
+    <div class="panel" id="panel-publicaffairs">
+        <div class="panel-header">
+            <div class="panel-eyebrow">1:30 – 1:45 PM · Session 2</div>
+            <div class="panel-title">Public Affairs Update</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-peter">P</span>Peter Dodge, Senior Director, Public Affairs</span>
+            </div>
+            <p class="panel-summary">Peter outlined Brand USA's four-pillar public affairs strategy in a constrained legislative environment — and made a specific ask of every partner in the room to help build the grassroots case for Brand USA's value.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>The Legislative Reality</h4>
+            <p>Divided Congress with a slim Republican majority. Floor time is scarce as Republicans focus on advancing the President's priorities before midterms. "Oxygen in the legislative space is low." Brand USA's strategy: elevate international inbound tourism as a jobs and economic story — not a travel story — and get it in front of offices that have never heard of Brand USA.</p>
+        </div>
+
+        <div class="section-label">The Four Pillars</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot">1</div>
+                <div class="timeline-content">
+                    <h4>Congressional Engagement</h4>
+                    <p>Expanding beyond champion offices to new members who have never heard of Brand USA. Inviting congressional staff to in-district events — last week in Memphis, staff from Senators Hagerty and Blackburn's offices got a behind-the-scenes Graceland experience they'll remember.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">2</div>
+                <div class="timeline-content">
+                    <h4>Executive Branch Engagement</h4>
+                    <p>Working with Commerce, State, DHS. Brand USA has a seat on the White House FIFA Task Force. Global Entry mobile enrollment: Australia next week with 4 CBP officers (~1,000 interviews). Building on prior activations in Japan and South Korea; more across Asia and Europe this year. Co-promoting the Great American Road Trip with Dept. of Transportation.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">3</div>
+                <div class="timeline-content">
+                    <h4>Trade Association &amp; Corporate Partner Engagement</h4>
+                    <p>New DC Industry Influencers Cabinet launched — regularly connects Brand USA with trade associations and government relations teams of corporate partners. Goal: partners fully conversant in Brand USA's mission when it matters most on Capitol Hill.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">4</div>
+                <div class="timeline-content">
+                    <h4>Grassroots Engagement — "The Most Critical Pillar"</h4>
+                    <p>All politics is local (Tip O'Neill). Broadening Brand USA awareness among governors, mayors, chambers of commerce, and business owners. The ask: share stories of store owners who hired more people, tax revenue that built a library, economic impact in your communities.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">Visit USA Act &amp; Reauthorization</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">🏛️</div><h4>Visit USA Act</h4><p>Introduced bipartisan in both House and Senate in November. New co-sponsors added regularly. Directly addresses funding cuts from "the one big beautiful bill."</p></div>
+            <div class="insight-box"><div class="insight-icon">📅</div><h4>Reauthorization Clock</h4><p>Brand USA's reauthorization is due end of 2027. Current public affairs work builds the foundation for a successful reauthorization — everything ladders to that goal.</p></div>
+            <div class="insight-box"><div class="insight-icon">⚖️</div><h4>What Brand USA Can (and Can't) Do</h4><p>Prohibited from lobbying on visa policy, entry policy, or its own existence. Relies on US Travel Association and HLA for procedural legislative work. Brand USA's role: tell the economic story.</p></div>
+        </div>
+
+        <div class="quotes-grid">
+            <div class="quote-card featured">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Our work supports economic development, job creation, trade, and American competitiveness. It advances soft diplomacy and strengthens the United States' reputation globally. When that broader understanding takes hold, Brand USA receives the recognition it has earned.</p>
+                <div class="quote-attr"><span>Peter Dodge</span> · Senior Director, Public Affairs</div>
+            </div>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>The Ask to Partners</h4>
+            <ul>
+                <li>Share data and economic impact examples from your communities</li>
+                <li>Flag milestones — store owners who hired more people, tax revenue that funded public projects</li>
+                <li>Help identify civic and business leaders in your markets for grassroots engagement</li>
+                <li>Engage your own government relations teams with the DC Industry Influencers Cabinet</li>
+                <li>The more voices telling this story at the district level, the stronger the case on Capitol Hill</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. MARKET INSIGHTS -->
+    <div class="panel" id="panel-research">
+        <div class="panel-header">
+            <div class="panel-eyebrow">1:45 – 2:15 PM · Session 3</div>
+            <div class="panel-title">Market Insights &amp; Research Update</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-chelsea">C</span>Chelsea Benitez, Sr. Director, Research &amp; Analytics</span>
+            </div>
+            <p class="panel-summary">A data-dense picture of where international visitation stands, what the forward indicators show, and how Brand USA tracks market health in real time. The headline: demand is uneven, Canada is the outlier dragging overall numbers, and 2026 is forecasted to be the inflection point.</p>
+        </div>
+
+        <div class="section-label">Arrivals at a Glance — Through November 2025</div>
+        <div class="stat-cards">
+            <div class="stat-card"><div class="sc-num">62.4M</div><div class="sc-label">Total international arrivals Jan–Nov 2025, down 5% YOY</div></div>
+            <div class="stat-card blue"><div class="sc-num">$229B</div><div class="sc-label">International visitor spend Jan–Nov 2025, flat YOY</div></div>
+            <div class="stat-card"><div class="sc-num">$685M</div><div class="sc-label">Visitor spend per day — injected into the US economy</div></div>
+            <div class="stat-card navy"><div class="sc-num">$3,500+</div><div class="sc-label">Average spend per visitor, up 6% YOY</div></div>
+        </div>
+
+        <div class="two-col">
+            <div class="insight-box" style="border-left:4px solid #c0392b; padding: 18px;">
+                <div class="insight-icon">🇨🇦</div>
+                <h4>Canada: The Outlier</h4>
+                <p>Down <strong>22% YOY</strong> — translating to <strong>4.1 million fewer visitors</strong>. Canada's decline is the single biggest factor in overall arrivals decline. Canada visitors also tend to stay shorter and spend less, which is why average per-visitor spend is up even as total spend is flat.</p>
+            </div>
+            <div class="insight-box" style="border-left:4px solid #1a9e4a; padding: 18px;">
+                <div class="insight-icon">🇲🇽</div>
+                <h4>Mexico: Counterbalance</h4>
+                <p>UP — <strong>1.2 million additional visitors</strong> vs. prior year. Mexico is now the #1 inbound market for the United States, and growth continues to accelerate. A critical market to protect and build in FY27.</p>
+            </div>
+        </div>
+
+        <div class="section-label">Overseas Market Performance — Full Year 2025 (excl. Canada &amp; Mexico)</div>
+        <table class="data-table">
+            <thead>
+                <tr><th>Market</th><th>Trend</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>🇬🇧 United Kingdom</td><td class="trend-up">↑ +1%</td><td>#1 overseas market — stable and growing</td></tr>
+                <tr><td>🇧🇷 Brazil</td><td class="trend-flat">→ Flat</td><td>Counted as positive; inaugural Travel Week next month</td></tr>
+                <tr><td>🇯🇵 Japan</td><td class="trend-up">↑ Positive</td><td>Ended year positive; projected to lag in long-term recovery</td></tr>
+                <tr><td>🇮🇹 Italy</td><td class="trend-up">↑ +5%</td><td><strong>All-time visitation record</strong></td></tr>
+                <tr><td>🇨🇴 Colombia</td><td class="trend-up">↑ +5%</td><td><strong>All-time visitation record</strong> — Q4 arrivals up 16%</td></tr>
+                <tr><td>🇦🇷 Argentina</td><td class="trend-up">↑ Double-digit</td><td>Strong growth; continued momentum</td></tr>
+                <tr><td>🇮🇱 Israel</td><td class="trend-up">↑ Double-digit</td><td>Outperforming despite regional disruption</td></tr>
+                <tr><td>🇬🇹 Guatemala</td><td class="trend-up">↑ Double-digit</td><td>Emerging market growth story</td></tr>
+                <tr><td>🇰🇷 South Korea</td><td class="trend-down">↓ -3%</td><td>Q4 up 15% — strong recovery trend underway</td></tr>
+                <tr><td>🇮🇳 India</td><td class="trend-down">↓ -6%</td><td>2nd straight year with 2M+ arrivals; 40% above 2019. Decline driven by student arrivals — leisure travelers actually up YOY. Compared against record 2024 base (+24%).</td></tr>
+                <tr><td>🇩🇪 Germany / 🇫🇷 France</td><td class="trend-down">↓ Softening</td><td>Both down YOY; national parks fee concerns flagged by Germany office</td></tr>
+                <tr><td>🇨🇳 China</td><td class="trend-down">↓ Softening</td><td>Down YOY; long-term recovery extends into 2030s</td></tr>
+            </tbody>
+        </table>
+
+        <div class="section-label">Forward Forecast — Tourism Economics</div>
+        <div class="stat-cards">
+            <div class="stat-card"><div class="sc-num">5%</div><div class="sc-label">Avg annual growth rate forecast beginning 2026 (total international incl. Canada &amp; Mexico)</div></div>
+            <div class="stat-card blue"><div class="sc-num">2027</div><div class="sc-label">Arrivals expected to surpass 2024 levels</div></div>
+            <div class="stat-card navy"><div class="sc-num">2029</div><div class="sc-label">Full recovery to pre-pandemic levels projected</div></div>
+        </div>
+
+        <div class="section-label">Air Capacity</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">✈️</div><h4>Exceeds Pre-Pandemic</h4><p>Nonstop international seat capacity exceeded pre-pandemic levels in 2024 and continues growing into 2026. Capacity ended 2025 above 2024 in most major inbound markets.</p></div>
+            <div class="insight-box"><div class="insight-icon">🗺️</div><h4>Breadth of Access</h4><p>Service from <strong>259 origin airports</strong> in <strong>105 countries</strong> directly into <strong>68 unique US destinations</strong>. The infrastructure for inbound growth is in place.</p></div>
+            <div class="insight-box"><div class="insight-icon">📈</div><h4>2026 Outlook</h4><p>Mixed growth in first half — gains in some markets, modest pullbacks in others — but new service announced regularly. Net positive trajectory.</p></div>
+        </div>
+
+        <div class="section-label">Consumer Sentiment — Monthly Tracking (11 Markets)</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">🏆</div><h4>US Still #1</h4><p>Despite headwinds, the US ranks as the <strong>#1 destination likely to be visited</strong> among international travelers (January 2026). #1 in Brazil, Mexico, and Canada; highest-ranked long-haul destination in France, Germany, Japan, and the UK.</p></div>
+            <div class="insight-box"><div class="insight-icon">💰</div><h4>Primary Barrier</h4><p>Personal financial constraints are "far and away" the #1 barrier to international travel — not politics, not safety. Secondary barriers (time off, logistics) remain stable.</p></div>
+            <div class="insight-box"><div class="insight-icon">🎯</div><h4>Active Travelers Are Different</h4><p>Active leisure travelers (planning an international trip in the next 12 months) rate the US significantly MORE favorably than the general population across all markets. Japan and Canada show particularly large gaps — precision targeting matters.</p></div>
+            <div class="insight-box"><div class="insight-icon">📊</div><h4>US-Specific Intent Softened</h4><p>Intent to visit the US declined across nearly all markets in 2025 vs. 2024. Only UK and Australia remained flat. Key US-specific deterrents: political climate, personal safety concerns, currency exchange rates.</p></div>
+        </div>
+
+        <div class="section-label">The Market Selection Model</div>
+        <div class="highlight-box">
+            <h4>How Brand USA Decides Where to Invest</h4>
+            <p>A proprietary model updated <strong>every month</strong> — not an annual plan. Tracks <strong>16 markets</strong> across <strong>20+ metrics</strong> organized into 4 areas: arrivals data, airline data, exchange rates, and consumer sentiment. Traffic light system: <strong>3 consecutive red months triggers a formal review</strong> and potential strategy adjustment. Currently narrowed to <strong>10 active media markets</strong> for maximum ROI with the constrained FY27 budget.</p>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>Four Themes Chelsea Closed With</h4>
+            <ul>
+                <li>Global demand is uneven — market-specific strategies are essential, not optional</li>
+                <li>Airline capacity supports future growth — the infrastructure is in place</li>
+                <li>Global travel intent is resilient, but US-specific intent has softened — earned trust matters</li>
+                <li>Audience polarization elevates the importance of precision targeting over broad reach</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. AMERICA THE BEAUTIFUL PLATFORM -->
+    <div class="panel" id="panel-platform">
+        <div class="panel-header">
+            <div class="panel-eyebrow">2:30 – 4:00 PM · Session 4</div>
+            <div class="panel-title">America the Beautiful Platform: Global Update</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-leah">L</span>Leah Chandler</span>
+                <span class="speaker-chip"><span class="speaker-dot av-chris">C</span>Chris Heywood</span>
+                <span class="speaker-chip"><span class="speaker-dot av-malcolm">M</span>Malcolm Smith</span>
+                <span class="speaker-chip"><span class="speaker-dot av-dan">D</span>Dan Rosenbaum</span>
+            </div>
+            <p class="panel-summary">Four Brand USA leaders walked through how the America the Beautiful platform operates globally — from Canada consumer strategy and earned media to trade co-op programs, original content, and website performance. The longest session of the day reflected the depth and breadth of Brand USA's current activation.</p>
+        </div>
+
+        <!-- LEAH -->
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-leah">L</div>
+                <div><div class="sb-name">Leah Chandler</div><div class="sb-role">Brand USA</div></div>
+            </div>
+
+            <div class="section-label" style="margin-top:0">Canada: Pause, Prepare, and Target</div>
+            <div class="highlight-box">
+                <h4>The Canada Approach</h4>
+                <p>Consumer media on pause. Search/SEM maintained at a light level. Canada Connect trade program proceeding. Next step: deep-dive research to identify the movable Canadian segment — luxury? VFR? Live events? — before any paid media restarts. Individual destination brands (e.g., Palm Springs) currently getting more traction with Canadians than "USA" brand messaging.</p>
+            </div>
+
+            <div class="quotes-grid">
+                <div class="quote-card featured">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">We have to get some data first before we think about restarting and investing in a market that at the moment largely is not interested in hearing from the USA. We would rather go in with something much more targeted — both in terms of who we're reaching and how we're reaching them.</p>
+                    <div class="quote-attr"><span>Leah Chandler</span></div>
+                </div>
+                <div class="quote-card">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">I don't know if that's going to be two months or two years, but we are going to be prepared.</p>
+                    <div class="quote-attr"><span>Leah Chandler</span> · On Canada timeline</div>
+                </div>
+            </div>
+
+            <div class="section-label">Canada Airline Landscape</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🚀</div><h4>Porter — The Story to Watch</h4><p>Scaling up significantly: new service to Nashville, Phoenix, Boston, Austin starting May; Chicago O'Hare added. Likely to "step up in really interesting ways" as other carriers pull back.</p></div>
+                <div class="insight-box"><div class="insight-icon">↩️</div><h4>WestJet &amp; Air Transat</h4><p>Both pulled back from US routes. Monitor for when they re-engage — a signal that consumer sentiment is shifting.</p></div>
+                <div class="insight-box"><div class="insight-icon">⏳</div><h4>Air Canada</h4><p>Not yet ready to re-engage at full scale. Watching the situation alongside Brand USA's own market model.</p></div>
+            </div>
+        </div>
+
+        <!-- CHRIS -->
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-chris">C</div>
+                <div><div class="sb-name">Chris Heywood</div><div class="sb-role">Brand USA · Earned Media &amp; PR</div></div>
+            </div>
+
+            <div class="section-label" style="margin-top:0">Earned Media Strategy</div>
+            <div class="quotes-grid">
+                <div class="quote-card featured">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">Earned media has never been more important than it is right now. It is a very challenging environment in Canada — the media there are tough as nails. I've never been in a market where I've been interrogated the way I was. And it still resulted in strong coverage.</p>
+                    <div class="quote-attr"><span>Chris Heywood</span> · Just back from Canada</div>
+                </div>
+            </div>
+
+            <div class="section-label">FY27 PR Pillars — With New Focus Areas</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🎬</div><h4>Screen Tourism / Set Jetting ⭐ NEW</h4><p>Major new FY27 initiative. Yellowstone, The Bear, Friends, Sex in the City, Barbie. Destinations with screen credits have a PR angle — use it.</p></div>
+                <div class="insight-box"><div class="insight-icon">🏟️</div><h4>Sports &amp; Live Events</h4><p>World Cup, F1, and beyond. Live events are becoming an ongoing category — not just one-time mega-events. Concerts, festivals, Taylor Swift-style tours, "sweat jetting" athletic events.</p></div>
+                <div class="insight-box"><div class="insight-icon">💎</div><h4>Luxury</h4><p>High-spend, high-propensity travelers. 15 international markets, 5 continents. Strong media relationships in Town &amp; Country, Condé Nast, regional luxury press.</p></div>
+                <div class="insight-box"><div class="insight-icon">🌲</div><h4>Outdoor &amp; Road Trip</h4><p>Route 66 Centennial is a major earned media opportunity. National parks and road trip culture remain top international draws.</p></div>
+                <div class="insight-box"><div class="insight-icon">👨‍👩‍👧</div><h4>Family</h4><p>Increased strategic focus. Universal Kids Resort in Frisco, TX flagged as a strong upcoming demand generator to pitch to international family media.</p></div>
+                <div class="insight-box"><div class="insight-icon">🍽️</div><h4>Culinary (Integrated)</h4><p>Woven through all pillars — not a standalone vertical. Food and drink as a lens on every story, not a separate category to pitch.</p></div>
+            </div>
+
+            <div class="section-label">How to Work with the Earned Media Team</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">📧</div><h4>press@brandusa.com</h4><p>Send pitchable news: new hotel openings, new attractions, major anniversaries, trending experiences (stargazing/nocturnal tourism, sweat jetting). If it's a story, send it.</p></div>
+                <div class="insight-box"><div class="insight-icon">🤝</div><h4>Visiting Journalist Program</h4><p>Brand USA brings international media to US destinations — group and individual programs. Airline partners support with flights. Apply to host a VJP group.</p></div>
+                <div class="insight-box"><div class="insight-icon">📱</div><h4>LinkedIn + Monthly Newsletter</h4><p>Follow Brand USA comms on LinkedIn and subscribe to the partner newsletter for calls to content and press release opportunities.</p></div>
+            </div>
+        </div>
+
+        <!-- MALCOLM -->
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-malcolm">M</div>
+                <div><div class="sb-name">Malcolm Smith</div><div class="sb-role">Brand USA · Trade &amp; Market Team</div></div>
+            </div>
+
+            <div class="section-label" style="margin-top:0">Canada Trade Engagement — Business as Usual</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">✈️</div><h4>Active Market Visits</h4><p>Personal visits to Canadian trade partners ongoing. Plan to "sit down with our trade partners and talk about new solutions" — maintaining presence even while consumer media is paused.</p></div>
+                <div class="insight-box"><div class="insight-icon">🌿</div><h4>National Parks Messaging</h4><p>Key trade talking point: costs have gone up, but the America the Beautiful Pass (significant value for 3+ parks) and the "stay longer, explore more deeply" message are converting. Also promoting parks without fees and state parks.</p></div>
+            </div>
+
+            <div class="section-label">Corporate Co-op Program</div>
+            <div class="stat-cards">
+                <div class="stat-card"><div class="sc-num">$8K</div><div class="sc-label">Entry-level co-op partnership tier at IBW</div></div>
+                <div class="stat-card blue"><div class="sc-num">$175K</div><div class="sc-label">Top tier co-op partnership</div></div>
+                <div class="stat-card navy"><div class="sc-num">5</div><div class="sc-label">Hand-selected "Top Tier" pilot partners co-branding with America the Beautiful, spring 2026</div></div>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🎯</div><h4>Lower-Funnel Focus</h4><p>Programs designed for conversions and bookings — "to, through, and beyond the gateways." B-to-B-to-C campaigns consistent with America the Beautiful creative and messaging.</p></div>
+                <div class="insight-box"><div class="insight-icon">🏨</div><h4>Pilot Partners</h4><p>Hilton (multiple markets). South Dakota piloting in UK and Australia. UK already live: Trailfinders and Travel Bag campaigns running.</p></div>
+                <div class="insight-box"><div class="insight-icon">📅</div><h4>More Detail Coming</h4><p>Full co-op pricing and partnership options at IBW and the end-of-April partner opportunities webinar.</p></div>
+            </div>
+        </div>
+
+        <!-- DAN -->
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-dan">D</div>
+                <div><div class="sb-name">Dan Rosenbaum</div><div class="sb-role">Senior Director, Digital Marketing, Brand USA</div></div>
+            </div>
+
+            <div class="section-label" style="margin-top:0">Website Performance — Oct 2025 through Feb 2026</div>
+            <div class="stat-cards">
+                <div class="stat-card"><div class="sc-num">5.7M</div><div class="sc-label">Users on americathebeautiful.com in 4 months</div></div>
+                <div class="stat-card blue"><div class="sc-num">135K</div><div class="sc-label">AI chat conversations via MindTrip planner</div></div>
+                <div class="stat-card"><div class="sc-num">2×</div><div class="sc-label">More pages viewed by AI planner users vs. standard visitors</div></div>
+                <div class="stat-card navy"><div class="sc-num">17×</div><div class="sc-label">Longer on-site when using the AI trip planner</div></div>
+                <div class="stat-card"><div class="sc-num">36%</div><div class="sc-label">Less likely to bounce when using AI planner</div></div>
+                <div class="stat-card blue"><div class="sc-num">+49%</div><div class="sc-label">Web Action Rate jump after January paid media optimization</div></div>
+            </div>
+
+            <div class="section-label">American Originals — New Content Series</div>
+            <div class="quotes-grid">
+                <div class="quote-card featured">
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">For 250 years, America's greatest export hasn't been a product. It's been the culture and the ideas created by its people. Only a national DMO can tell that story. Content is the connective tissue. Basic information is now commoditized.</p>
+                    <div class="quote-attr"><span>Dan Rosenbaum</span> · On the American Originals concept</div>
+                </div>
+            </div>
+
+            <div class="section-label">The 4 Qualifying Criteria for an American Original</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">📍</div><h4>1. Specific Origin</h4><p>It must have started somewhere specific in the United States — a place on a map, a name, a moment.</p></div>
+                <div class="insight-box"><div class="insight-icon">🖐️</div><h4>2. Physical Experience</h4><p>Something a traveler can actually see, touch, or experience at that location today.</p></div>
+                <div class="insight-box"><div class="insight-icon">🌐</div><h4>3. International Resonance</h4><p>It must mean something to global audiences — a cultural touchpoint that transcends American borders.</p></div>
+                <div class="insight-box"><div class="insight-icon">🔗</div><h4>4. A Bridge — Visitable Now</h4><p>The story must connect directly to a place travelers can book and visit today. Not history — living experience.</p></div>
+            </div>
+
+            <div class="section-label">4 Pilot Episodes</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🏜️</div><h4>Monument Valley</h4><p>Full Navajo Nation tribal consultation. Filmed through tribally-owned tour companies. Navajo tourism down ~50% — heavily reliant on international visitors. Arizona &amp; Utah tourism offices partnered.</p></div>
+                <div class="insight-box"><div class="insight-icon">🍖</div><h4>Texas Barbecue</h4><p>A distinctly American culinary art form with a specific origin and an intensely global fan base. Culinary + place + culture in one story.</p></div>
+                <div class="insight-box"><div class="insight-icon">🎵</div><h4>Elvis &amp; Rock &amp; Roll · Memphis</h4><p>Birthplace of a genre that changed the world. Graceland and Beale Street — international visitors have wanted to see it for decades.</p></div>
+                <div class="insight-box"><div class="insight-icon">🎭</div><h4>Broadway · New York City</h4><p>The world's most recognized live performance brand. An only-in-America experience with global name recognition and direct booking opportunity.</p></div>
+            </div>
+
+            <div class="section-label">Website Technology &amp; April 2026 Merger</div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🔀</div><h4>visittheusa.com Merger — April 2026</h4><p>Strong international SEO authority of visittheusa.com + modern platform and AI capabilities of americathebeautiful.com. One URL, best of both.</p></div>
+                <div class="insight-box"><div class="insight-icon">🤖</div><h4>MindTrip AI Planner</h4><p>500+ points of entry into the AI trip planning experience. Delivers 17× longer site engagement and 36% lower bounce rate.</p></div>
+                <div class="insight-box"><div class="insight-icon">👤</div><h4>Demand Science</h4><p>Real-time personalization — adapts the site experience to each individual visitor in real time based on intent signals.</p></div>
+                <div class="insight-box"><div class="insight-icon">🌐</div><h4>Weglot</h4><p>AI-powered translation enabling multilingual content delivery without manual translation overhead.</p></div>
+            </div>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>Session 4 Takeaways</h4>
+            <ul>
+                <li>Canada: data before dollars — research the movable segment before restarting paid media</li>
+                <li>Screen tourism / set jetting is the new PR priority — identify your destination's screen credits now</li>
+                <li>Send pitchable news to press@brandusa.com — earned media is AI discoverability</li>
+                <li>Co-op pricing spans $8K–$175K — detail at IBW and April webinar</li>
+                <li>American Originals launches at IBW — formal announcement coming; 4 pilot episodes ready</li>
+                <li>Website merger in April; AI planner users are 17× more engaged</li>
+                <li>Only content a national DMO can tell survives AI commoditization of basic information</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 5. AI & INNOVATION -->
+    <div class="panel" id="panel-ai">
+        <div class="panel-header">
+            <div class="panel-eyebrow">4:15 – 5:00 PM · Session 5</div>
+            <div class="panel-title">AI &amp; Innovation: Transforming How the World Discovers the USA</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-janette">J</span>Janette Roush, SVP Innovation &amp; Chief AI Officer</span>
+            </div>
+            <p class="panel-summary">The day's final session was a high-energy, working AI workshop. Janette covered how AI is reshaping the traveler discovery journey, what destination marketers can do right now, and where Brand USA is investing for the network over FY27. Described by the room as "high energy" and a "special treat."</p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>Brand USA's AI Mission</h4>
+            <p>Brand USA can lead global destination marketing into the AI era by using intelligent systems to connect the world to the stories, people, and places of the United States — across three fronts: (1) internal efficiency and capability at Brand USA, (2) sharing learnings broadly so the industry stays competitive, and (3) making the U.S. more discoverable and bookable through AI systems.</p>
+        </div>
+
+        <div class="section-label">The Numbers</div>
+        <div class="stat-cards">
+            <div class="stat-card"><div class="sc-num">62%</div><div class="sc-label">Travelers who have used AI in some form for trip planning (Booking.com, July 2025, 34K respondents)</div></div>
+            <div class="stat-card blue"><div class="sc-num">64%</div><div class="sc-label">Brand USA partners who say Brand USA helps their org understand AI for tourism marketing</div></div>
+            <div class="stat-card navy"><div class="sc-num">6%</div><div class="sc-label">Consumers who fully trust AI solutions — human verification and DMO authority still essential</div></div>
+            <div class="stat-card"><div class="sc-num">175%</div><div class="sc-label">Growth in AI engagement metric after January 2026 paid media optimization</div></div>
+        </div>
+
+        <div class="quotes-grid">
+            <div class="quote-card featured">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">AI doesn't care what the size of your ad budget is. The genie is not going back in the bottle. The discovery layer is being rebuilt in real time.</p>
+                <div class="quote-attr"><span>Janette Roush</span> · Brand USA</div>
+            </div>
+            <div class="quote-card">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">It's not cheating to use AI at work. It's okay. Please do it. It's a good idea. We are not going to outspend the Middle East — so how can we as an industry come together to work smarter?</p>
+                <div class="quote-attr"><span>Janette Roush</span></div>
+            </div>
+            <div class="quote-card">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">I encourage us to think of AI as a new distribution model for content. It's not a replacement for having a website — it's a new channel for that content to reach travelers.</p>
+                <div class="quote-attr"><span>Janette Roush</span></div>
+            </div>
+        </div>
+
+        <div class="section-label">Earned Media as an AI Signal</div>
+        <div class="quotes-grid">
+            <div class="quote-card featured">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">AI systems are looking for credibility signals. Me saying I'm the Taylor Swift of destination AI doesn't mean very much. But when Group Now says it, that's a credibility signal. It's the same thing with the press — if Town and Country says something about your destination, that's going to carry more weight than if you say it yourself.</p>
+                <div class="quote-attr"><span>Janette Roush</span> · On earned media and AI discoverability</div>
+            </div>
+        </div>
+
+        <div class="section-label">Destination as a Service — The Framework</div>
+        <div class="timeline">
+            <div class="timeline-item"><div class="timeline-dot">1</div><div class="timeline-content"><h4>Content Layer (DMO-Led)</h4><p>Authoritative, structured, specific destination content. Schema markup, clear headers, well-organized meta tags — "geo" (Generative Engine Optimization). Unique content with specific origins, not top-10 lists. Infrequently asked questions are the new SEO currency.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot">2</div><div class="timeline-content"><h4>Integration Layer (MCP / API)</h4><p>DMOs make destination data available via APIs and MCP servers (Model Context Protocol) so traveler AI tools can pull accurate, real-time information. The Broadway example: instead of 12 searches across ticketing sites, a connected AI instantly compares shows, prices, and dates. DMOs become the trusted source of truth.</p></div></div>
+            <div class="timeline-item"><div class="timeline-dot">3</div><div class="timeline-content"><h4>Transaction Layer (AI Payments)</h4><p>"In a year it will be very common for consumers to be buying things through AI tools." DMOs and partners need to be plugged in before that wave arrives — not scrambling to catch up after.</p></div></div>
+        </div>
+
+        <div class="section-label">AI Tools Demonstrated</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">🎬</div><h4>Descript</h4><p>Edit video by deleting words in a transcript. AI voice re-recording. Multilingual AI voiceover — produce Spanish-language content without a native speaker on staff.</p></div>
+            <div class="insight-box"><div class="insight-icon">💻</div><h4>Claude Code</h4><p>"Vibe coding" — create websites, documents, and strategic visualizations with no programming knowledge. Used by Janette for Brand USA strategic planning. "Where all of the over-the-top hype is actually happening."</p></div>
+            <div class="insight-box"><div class="insight-icon">🌐</div><h4>Lovable</h4><p>Website builder through AI description. Drag-free, code-free website creation accessible to any team member.</p></div>
+            <div class="insight-box"><div class="insight-icon">📎</div><h4>Plaud Pin</h4><p>AI wearable recording device — used in this session today. Turns every meeting into structured, searchable notes automatically. "The leader in that space."</p></div>
+            <div class="insight-box"><div class="insight-icon">🔍</div><h4>Google Disco (Beta)</h4><p>Pulls all open research tabs into one AI-generated summary page. Using travel (Burlington, VT) as its demo use case. Watch this space.</p></div>
+            <div class="insight-box"><div class="insight-icon">📺</div><h4>Agents of Change</h4><p>Brand USA's monthly webinar series on practical AI use cases for the tourism industry. Free, built for the partner network.</p></div>
+        </div>
+
+        <div class="section-label">On AI Visibility Measurement</div>
+        <div class="quotes-grid">
+            <div class="quote-card">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Tools claiming to measure AI visibility are mostly just throwing a ton of chats into different systems and seeing if you get mentioned or not. I honestly think it's a little bit of snake oil — because these systems are becoming so personalized that a generic query resulting in your destination being cited doesn't extend to real people using AI in real ways.</p>
+                <div class="quote-attr"><span>Janette Roush</span></div>
+            </div>
+            <div class="quote-card">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">I worked at Broadway.com when they acquired the company I worked for in the year 2000. That was before you had real metrics of website traffic. You could have invested a lot of time figuring it out — or give it a year and Google would tell you, because that's how Google was going to sell more ads to you. OpenAI is now selling ads. The metrics will come.</p>
+                <div class="quote-attr"><span>Janette Roush</span> · The patience argument</div>
+            </div>
+        </div>
+
+        <div class="section-label">FY27 Network Programs Being Built</div>
+        <div class="program-cards">
+            <div class="program-card">
+                <div class="program-num">01</div>
+                <h3>Weekly AI Adoption Email</h3>
+                <p>One concrete AI idea your team can act on this week. Builds organizational muscle memory across the network without requiring dedicated training time.</p>
+                <span class="program-tag">All staff · Weekly</span>
+            </div>
+            <div class="program-card p2">
+                <div class="program-num">02</div>
+                <h3>Monthly Peer Networks</h3>
+                <p>Function-specific Zoom conversations — HR, Convention Sales, Digital Marketing — where peers share what's working at their organizations. Peer learning, not webinars. Real conversations.</p>
+                <span class="program-tag">By function · Monthly</span>
+            </div>
+            <div class="program-card p3">
+                <div class="program-num">03</div>
+                <h3>Train the Trainer</h3>
+                <p>One AI champion identified and equipped at every organization in the network. Goal: a distributed layer of internal advocates who drive adoption from the inside — including into the small businesses in their destinations.</p>
+                <span class="program-tag">One per org · In development</span>
+            </div>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>Session 5 Takeaways</h4>
+            <ul>
+                <li>62% of travelers already using AI for trip planning — the discovery layer is actively shifting</li>
+                <li>Earned media = AI credibility signal — PR strategy and AI discoverability are now the same investment</li>
+                <li>AI visibility measurement tools are largely unreliable right now — focus on controllable fundamentals</li>
+                <li>Metrics will come when OpenAI's ad business needs to prove performance — be patient, not panicked</li>
+                <li>MCP/API integration is the next frontier — DMOs that move now become the source of truth</li>
+                <li>Identify your AI champion for the Train the Trainer program — every org should name one</li>
+                <li>64% of partners say Brand USA helps with AI understanding — the goal is to raise that number significantly</li>
+            </ul>
+        </div>
+    </div>
+
+</div><!-- /panels -->
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 415.12 296.38">
+          <defs><style>.fl1{fill:#fff;}.fl1,.fl2{stroke-width:0px;}.fl2{fill:#00a9e0;}</style></defs>
+          <g><g>
+            <path class="fl1" d="M88.18,170.68v-48.75h25.5v48.13c0,11.32,5.47,18.16,15.55,18.16s15.55-6.84,15.55-18.16v-48.13h25.5v48.75c0,25.12-14.05,39.43-41.04,39.43s-41.04-14.3-41.04-39.43Z"/>
+            <path class="fl1" d="M295.47,121.42h-31.22l-15.22,42.79c2.77,4.63,4.17,10.2,4.17,16.67,0,12.02-5.04,21.52-14.03,27.61h19.11l5.47-16.29h31.96l5.47,16.29h25.75l-31.47-87.06ZM270.34,172.29l9.33-27.74,9.33,27.74h-18.66Z"/>
+          </g>
+          <path class="fl1" d="M213.15,120.31c-22.76,0-37.19,10.07-37.19,28.11,0,34.2,46.02,22.14,46.02,34.82,0,4.1-3.23,6.47-12.06,6.47-9.57,0-18.89-2.86-26.97-8.45l-7.46,21.03c9,5.03,20.32,7.81,34.44,7.81,23.51,0,36.94-11.19,36.94-29.23,0-34.58-46.02-22.64-46.02-34.2,0-3.98,3.98-5.97,12.44-5.97s16.12,2.47,21.47,6.31l7.21-20.32c-7.42-3.81-17.46-6.39-28.81-6.39Z"/>
+          </g>
+          <g>
+            <path class="fl2" d="M88.13,88.47h11.74c2.91,0,5.12.75,6.61,2.23,1.16,1.15,1.73,2.58,1.73,4.29v.07c0,.72-.09,1.36-.27,1.91-.18.55-.42,1.05-.72,1.5-.3.44-.65.84-1.05,1.17-.4.34-.83.62-1.28.87,1.47.55,2.62,1.31,3.47,2.26.84.95,1.26,2.27,1.26,3.96v.07c0,1.16-.22,2.17-.67,3.04-.45.87-1.08,1.59-1.91,2.17-.83.58-1.83,1.01-3,1.3-1.17.29-2.46.43-3.88.43h-12.03v-25.28ZM102.68,95.93c0-.84-.31-1.48-.94-1.92-.63-.44-1.53-.66-2.71-.66h-5.49v5.31h5.13c1.23,0,2.2-.21,2.93-.63.72-.42,1.08-1.09,1.08-2.03v-.07ZM104.09,106.06c0-.84-.33-1.51-.97-2-.65-.49-1.7-.74-3.14-.74h-6.43v5.56h6.61c1.23,0,2.19-.22,2.89-.67.7-.44,1.05-1.14,1.05-2.08v-.07Z"/>
+            <path class="fl2" d="M114.2,88.47h11.56c3.2,0,5.66.85,7.37,2.56,1.44,1.44,2.17,3.37,2.17,5.78v.07c0,2.05-.5,3.71-1.5,5-1,1.29-2.31,2.23-3.92,2.83l6.18,9.03h-6.5l-5.42-8.09h-4.37v8.09h-5.56v-25.28ZM125.4,100.75c1.37,0,2.42-.32,3.16-.97.73-.65,1.1-1.51,1.1-2.59v-.07c0-1.2-.39-2.1-1.16-2.69-.77-.6-1.84-.9-3.21-.9h-5.53v7.22h5.63Z"/>
+            <path class="fl2" d="M148.98,88.29h5.13l10.83,25.46h-5.81l-2.31-5.67h-10.69l-2.31,5.67h-5.67l10.83-25.46ZM154.83,103.17l-3.36-8.2-3.36,8.2h6.72Z"/>
+            <path class="fl2" d="M168.12,88.47h5.13l11.85,15.56v-15.56h5.49v25.28h-4.73l-12.24-16.07v16.07h-5.49v-25.28Z"/>
+            <path class="fl2" d="M196.65,88.47h9.86c1.97,0,3.79.32,5.43.96,1.65.64,3.07,1.52,4.26,2.65,1.19,1.13,2.11,2.46,2.76,3.99.65,1.53.97,3.18.97,4.97v.07c0,1.78-.33,3.44-.97,4.98-.65,1.54-1.57,2.88-2.76,4.01-1.19,1.13-2.61,2.02-4.26,2.67-1.65.65-3.46.98-5.43.98h-9.86v-25.28ZM202.21,93.53v15.17h4.3c1.13,0,2.17-.18,3.11-.54.94-.36,1.74-.87,2.4-1.55s1.18-1.46,1.55-2.37.56-1.93.56-3.06v-.07c0-1.1-.19-2.12-.56-3.05s-.89-1.74-1.55-2.41-1.46-1.19-2.4-1.56c-.94-.37-1.97-.56-3.11-.56h-4.3Z"/>
+          </g>
+        </svg>
+    </div>
+    <p>FY27 Strategic Planning · Partner Input Session · Day 1 · February 19, 2026</p>
+    <p style="margin-top:4px;font-size:0.65rem;opacity:0.5;">Internal use only</p>
+</footer>
+
+<script>
+    function switchPanel(id) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.session-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('panel-' + id).classList.add('active');
+        event.currentTarget.classList.add('active');
+        document.querySelector('.session-nav').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+</script>
+</body>
+</html>
