@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>FY27 Partner Input Session — Day 1</title>
+    <title>FY27 Partner Input Session — Day 1 &amp; 2</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -255,6 +255,38 @@
             .stat-cards { grid-template-columns: 1fr; }
             .tab-title { font-size: 0.7rem; }
         }
+
+        /* ── DAY TOGGLE ── */
+        .day-toggle { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .day-label { color: var(--pond); font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+        .day-btn { background: transparent; border: 1px solid rgba(135,143,154,0.4); color: var(--pond); font-family: 'Oswald', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.5px; padding: 6px 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .day-btn:hover:not(.active) { border-color: var(--pond); color: var(--white); }
+        .day-btn.active { background: var(--cyan); border-color: var(--cyan); color: var(--navy); }
+
+        /* ── DAY NAV / PANELS SHOW-HIDE ── */
+        .day-nav { display: none; }
+        .day-nav.active { display: flex; }
+        .day-panels-wrap { display: none; }
+        .day-panels-wrap.active { display: block; }
+
+        /* ── REGION SUB-NAV ── */
+        .region-wrap { margin-bottom: 8px; }
+        .region-nav { display: flex; overflow-x: auto; scrollbar-width: none; background: var(--cream); border-radius: 8px; gap: 4px; padding: 5px; margin-bottom: 24px; }
+        .region-nav::-webkit-scrollbar { display: none; }
+        .region-tab { background: transparent; border: none; cursor: pointer; padding: 8px 14px; border-radius: 6px; white-space: nowrap; font-family: 'Montserrat', sans-serif; font-size: 0.76rem; font-weight: 600; color: var(--slate); transition: all 0.2s; }
+        .region-tab:hover { background: rgba(0,84,159,0.06); color: var(--navy); }
+        .region-tab.active { background: var(--white); color: var(--usa-blue); box-shadow: 0 1px 4px rgba(16,31,54,0.1); }
+        .region-panel { display: none; }
+        .region-panel.active { display: block; }
+
+        /* ── NEW AVATAR COLORS (Day 2) ── */
+        .av-tyler   { background: linear-gradient(135deg, #4C5768, #878F9A); }
+        .av-tracy   { background: linear-gradient(135deg, #00A9E0, #4C5768); }
+        .av-jackie  { background: linear-gradient(135deg, #00549F, #00A9E0); }
+        .av-sean    { background: linear-gradient(135deg, #00A9E0, #00549F); }
+        .av-cassidy { background: linear-gradient(135deg, #878F9A, #4C5768); }
+
+        @media (max-width: 768px) { .day-toggle { padding: 8px 16px; } }
     </style>
 </head>
 <body>
@@ -280,15 +312,15 @@
           </g>
         </svg>
         <div class="logo-divider"></div>
-        <div class="nav-session">FY27 Partner Input · Day 1 · Feb 19, 2026</div>
+        <div class="nav-session">FY27 Partner Input · Feb 19–20, 2026</div>
     </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-    <div class="hero-tag">February 19, 2026 · Internal</div>
-    <h1>FY27 Strategic Planning<br><span>Partner Input Session — Day 1</span></h1>
-    <p class="hero-meta">~75 partners · 5 sessions · Strategy, research, global marketing & AI</p>
+    <div class="hero-tag">February 19–20, 2026 · Internal</div>
+    <h1>FY27 Strategic Planning<br><span>Partner Input Session — Day 1 &amp; 2</span></h1>
+    <p class="hero-meta">~75 partners · 9 sessions · Strategy, research, global markets &amp; AI</p>
     <div class="stats-row">
         <div class="stat"><div class="stat-num">62.4M</div><div class="stat-label">Int'l arrivals thru Nov '25</div></div>
         <div class="stat"><div class="stat-num">$685M</div><div class="stat-label">Visitor spend per day</div></div>
@@ -297,8 +329,15 @@
     </div>
 </div>
 
+<!-- DAY TOGGLE -->
+<div class="day-toggle">
+    <span class="day-label">Day</span>
+    <button class="day-btn active" data-day="1" onclick="switchDay('1')">Day 1 — Feb 19</button>
+    <button class="day-btn" data-day="2" onclick="switchDay('2')">Day 2 — Feb 20</button>
+</div>
+
 <!-- SESSION NAV -->
-<div class="session-nav">
+<div id="nav-day1" class="session-nav day-nav active">
     <button class="session-tab active" onclick="switchPanel('welcome')">
         <div class="tab-time">1:00 – 1:30</div>
         <div class="tab-title">Welcome &amp; Program Overview</div>
@@ -324,10 +363,33 @@
         <div class="tab-title">AI &amp; Innovation</div>
         <div class="tab-speakers">Janette Roush</div>
     </button>
-</div>
+</div><!-- /nav-day1 -->
+
+<div id="nav-day2" class="session-nav day-nav">
+    <button class="session-tab active" onclick="switchPanel('d2opening')">
+        <div class="tab-time">9:00 – 9:10</div>
+        <div class="tab-title">Opening &amp; Reflections</div>
+        <div class="tab-speakers">Tyler Gosnell · Tracy Vaughn · Angie Briggs</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('d2markets')">
+        <div class="tab-time">9:10 – 11:00</div>
+        <div class="tab-title">Market-Based Strategies</div>
+        <div class="tab-speakers">Jackie Ennis · Malcolm Smith · Chris Heywood</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('d2resources')">
+        <div class="tab-time">11:15 – 11:40</div>
+        <div class="tab-title">Evolving Partner Resources</div>
+        <div class="tab-speakers">Malcolm Smith · Sean Bayliss · Jackie Ennis</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('d2action')">
+        <div class="tab-time">11:40 – 12:00</div>
+        <div class="tab-title">Continued Engagement</div>
+        <div class="tab-speakers">Angie Briggs · Fred Dixon · Janette Roush</div>
+    </button>
+</div><!-- /nav-day2 -->
 
 <!-- PANELS -->
-<div class="panels">
+<div id="panels-day1" class="day-panels-wrap active"><div class="panels">
 
     <!-- 1. WELCOME & OVERVIEW -->
     <div class="panel active" id="panel-welcome">
@@ -899,7 +961,512 @@
         </div>
     </div>
 
-</div><!-- /panels -->
+</div><!-- /panels-day1-inner --></div><!-- /panels-day1 -->
+
+<div id="panels-day2" class="day-panels-wrap"><div class="panels">
+
+    <!-- D2-1: OPENING & REFLECTIONS -->
+    <div class="panel active" id="panel-d2opening">
+        <div class="panel-header">
+            <div class="panel-eyebrow">9:00 – 9:10 AM · Opening</div>
+            <div class="panel-title">IPW Update, Fort Lauderdale Preview &amp; Day 1 Reflections</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-tyler">T</span>Tyler Gosnell, U.S. Travel Association</span>
+                <span class="speaker-chip"><span class="speaker-dot av-tracy">T</span>Tracy Vaughn, Visit Fort Lauderdale</span>
+                <span class="speaker-chip"><span class="speaker-dot av-angie">A</span>Angie Briggs, Brand USA</span>
+            </div>
+            <p class="panel-summary">Day 2 opened with urgent context from U.S. Travel on IPW logistics and a critical entry policy alert — misinformation is causing real deterrence in key markets. Fort Lauderdale previewed an innovative host-city model. Angie Briggs then framed four strategic takeaways from Day 1.</p>
+        </div>
+
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-tyler">T</div>
+                <div><div class="sb-name">Tyler Gosnell</div><div class="sb-role">U.S. Travel Association</div></div>
+            </div>
+
+            <div class="highlight-box" style="background: linear-gradient(135deg, #6B0000, #101F36);">
+                <h4>⚠️ Entry Policy Misinformation — Causing Real Deterrence</h4>
+                <p>The $250 visa integrity fee has NOT been implemented. U.S. Travel successfully delayed it and is pushing to delay indefinitely. The ESTA social media requirement is a proposal under review — not a mandate. Yet Mexican tour operators at lunch meetings already believed both were in effect as of January 1. <strong style="color:#FFD700;">Perception is reality — and the perception is wrong.</strong> Brand USA and CBP are developing unified talking points and a clear visa status link on americathebeautiful.com that partners can share directly.</p>
+            </div>
+
+            <div class="stat-cards">
+                <div class="stat-card"><div class="sc-num">$250</div><div class="sc-label">Visa integrity fee — delayed indefinitely; NOT currently in effect</div></div>
+                <div class="stat-card blue"><div class="sc-num">Feb 27</div><div class="sc-label">IPW registration rate increase — register international buyers &amp; media before this date</div></div>
+                <div class="stat-card"><div class="sc-num">Mar 2</div><div class="sc-label">IPW appointments open — international delegate registrations taper after this date</div></div>
+                <div class="stat-card navy"><div class="sc-num">Largest</div><div class="sc-label">Latin American delegation ever projected at IPW Fort Lauderdale</div></div>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🌎</div><h4>Latin America &amp; Asia</h4><p>Latin America on pace for the largest IPW delegation in history. China growing year-over-year (strong numbers, not yet back to pre-COVID). Korea: good numbers.</p></div>
+                <div class="insight-box"><div class="insight-icon">🛂</div><h4>Seamless Arrival Pilot</h4><p>U.S. Travel partnering with CBP and Florida local leadership on a seamless arrival experience for international IPW delegates — with potential to roll out to other gateway cities for major events.</p></div>
+            </div>
+        </div>
+
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-tracy">T</div>
+                <div><div class="sb-name">Tracy Vaughn</div><div class="sb-role">Visit Fort Lauderdale</div></div>
+            </div>
+            <div class="insights-grid">
+                <div class="insight-box"><div class="insight-icon">🎭</div><h4>City-First Format</h4><p>For the first time, IPW conforms to the host city — not the other way around. Broadway performing at Fort Lauderdale's Performing Arts Center. Partners have already booked venues for off-night events.</p></div>
+                <div class="insight-box"><div class="insight-icon">🤝</div><h4>Ambassador Program</h4><p>Launching in the next two weeks: hospitality training for the Fort Lauderdale community to prepare for international delegates. A model for how destinations can mobilize around major events.</p></div>
+            </div>
+        </div>
+
+        <div class="speaker-block">
+            <div class="speaker-block-header">
+                <div class="sb-avatar av-angie">A</div>
+                <div><div class="sb-name">Angie Briggs</div><div class="sb-role">Brand USA</div></div>
+            </div>
+            <div class="section-label" style="margin-top:0">Four Strategic Takeaways from Day 1</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-content">
+                        <h4>The Arrivals Story Is Hiding Good News</h4>
+                        <p>Arrivals are down 5% — but total visitor spend is flat, and average per-visitor spend is UP 6%. Active leisure travelers (planning a trip in the next 12 months) rate the U.S. significantly more favorably than the general population. Japan and Canada show the largest sentiment gap. The movable audience is identifiable and reachable.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="timeline-content">
+                        <h4>Earned Media and AI Discoverability Are Now the Same Investment</h4>
+                        <p>What PR teams do today directly determines whether a destination gets cited in AI responses tomorrow. "If you're cutting PR to fund digital, you're cutting AI visibility." These are no longer separate strategies or separate budget lines.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-content">
+                        <h4>DMOs Are About to Inherit a Job Nobody Has Budgeted</h4>
+                        <p>Every DMO will eventually need to make content available as structured data — APIs and MCP servers — so AI travel tools can pull accurate, real-time information. Organizations that move first become the source of truth. Those that wait get summarized by whoever got there first.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="timeline-content">
+                        <h4>10 Core Markets — Others Remain Active Through Different Channels</h4>
+                        <p>Brand USA's consumer campaign focuses on 10 core markets for highest ROI. Germany, France, Italy, and other long-standing markets continue through trade programs and earned media. "We're finding more efficient ways to be there and amplify your presence."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /panel-d2opening -->
+
+    <!-- D2-2: MARKET STRATEGIES -->
+    <div class="panel" id="panel-d2markets">
+        <div class="panel-header">
+            <div class="panel-eyebrow">9:10 – 11:00 AM · Session 2</div>
+            <div class="panel-title">Market-Based Strategies: Global Update</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-jackie">J</span>Jackie Ennis</span>
+                <span class="speaker-chip"><span class="speaker-dot av-malcolm">M</span>Malcolm Smith</span>
+                <span class="speaker-chip"><span class="speaker-dot av-chris">C</span>Chris Heywood</span>
+                <span class="speaker-chip"><span class="speaker-dot av-leah">L</span>Leah Chandler</span>
+            </div>
+            <p class="panel-summary">The session's centerpiece: a market-by-market deep dive across 5 regions and 15+ markets. Brand USA's regional trade, PR, and market leaders delivered the most data-rich session of the two-day summit.</p>
+        </div>
+
+        <div class="region-wrap">
+            <div class="region-nav">
+                <button class="region-tab active" onclick="switchRegion(this,'europe')">🌍 Europe</button>
+                <button class="region-tab" onclick="switchRegion(this,'southamerica')">🌎 South America</button>
+                <button class="region-tab" onclick="switchRegion(this,'asiapacific')">🌏 Asia Pacific</button>
+                <button class="region-tab" onclick="switchRegion(this,'canada')">🇨🇦 Canada</button>
+                <button class="region-tab" onclick="switchRegion(this,'mexico')">🇲🇽 Mexico</button>
+            </div>
+
+            <!-- EUROPE -->
+            <div id="region-europe" class="region-panel active">
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">40%</div><div class="sc-label">Europe's share of total overseas inbound visitation to the US</div></div>
+                    <div class="stat-card blue"><div class="sc-num">4.5M</div><div class="sc-label">UK visitors in 2025 — #1 overseas market; 2M+ more than #2</div></div>
+                    <div class="stat-card"><div class="sc-num">1.2M</div><div class="sc-label">Italy visitors in 2025 — all-time record; up 5%</div></div>
+                    <div class="stat-card navy"><div class="sc-num">+7–13%</div><div class="sc-label">GBP &amp; Euro appreciation vs. USD — improving affordability</div></div>
+                </div>
+
+                <div class="table-scroll"><table class="data-table">
+                    <thead><tr><th>Market</th><th>2025 Trend</th><th>Key Metric</th><th>2026 Watch</th></tr></thead>
+                    <tbody>
+                        <tr><td>🇬🇧 United Kingdom</td><td class="trend-up">↑ +1%</td><td>4.5M visitors</td><td>Double-digit forward bookings (Gold Medal, Kuoni, Travel Bag); "Super September" now extends to Q4</td></tr>
+                        <tr><td>🇮🇪 Ireland</td><td class="trend-up">↑ Growing</td><td>20 US gateways</td><td>2 new in 2026: Pittsburgh + Raleigh-Durham; also Indy, Nashville</td></tr>
+                        <tr><td>🇮🇹 Italy</td><td class="trend-up">↑ +5% Record</td><td>1.2M visitors</td><td>New gateways: Naples, Palermo, Sardinia; Rome–Seattle routes launched</td></tr>
+                        <tr><td>🇪🇸 Spain</td><td class="trend-up">↑ +1.5%</td><td>900K+</td><td>Strategy: introduce Spanish travelers to new US destinations beyond the usual</td></tr>
+                        <tr><td>🇩🇪🇫🇷 Germany / France</td><td class="trend-down">↓ Softening</td><td>Declining</td><td>New Paris capacity/frequency; national parks fees a concern in Germany</td></tr>
+                    </tbody>
+                </table></div>
+
+                <div class="highlight-box">
+                    <h4>✈️ A321XLR — The Game-Changing Aircraft</h4>
+                    <p>4,700-mile range (~10 hours). 500 on order industry-wide; United and American each have ~50. Enables year-round service where wide-bodies can't fill off-season economics. Opens routes previously impossible: Seattle–Northern Japan, SF–Bogotá, Miami–Buenos Aires, San Antonio–London. Being delivered premium-heavy — higher per-seat revenue for carriers.</p>
+                </div>
+
+                <div class="section-label">PR Trends Resonating in Europe (Chris Heywood)</div>
+                <div class="insights-grid">
+                    <div class="insight-box"><div class="insight-icon">📚</div><h4>Literary &amp; Book Travel</h4><p>Location-based travel inspired by books and films. Strong earned media angle for destinations with cultural heritage.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🧘</div><h4>Wellness Retreats</h4><p>Wellness travel emerging as a primary trip motivator across UK and European markets.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🚂</div><h4>Rail Travel</h4><p>Colorado, the West — rail itineraries are resonating strongly with European media and consumers.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🌍</div><h4>Identity-Based Storytelling</h4><p>Cultural identity narratives (e.g., Bad Bunny in Puerto Rico for Spanish-speaking audiences) performing well. Match the story to the audience's cultural lens.</p></div>
+                </div>
+
+                <div class="quotes-grid">
+                    <div class="quote-card featured">
+                        <span class="quote-mark">"</span>
+                        <p class="quote-text">There has been no formal change to visa entry policy, despite what you've heard.</p>
+                        <div class="quote-attr"><span>Chris Heywood</span> · Brand USA Earned Media &amp; PR</div>
+                    </div>
+                </div>
+
+                <div class="takeaway-bar">
+                    <h4>Europe Key Actions</h4>
+                    <ul>
+                        <li>Identify your destination's screen credits — set-jetting is the new PR priority</li>
+                        <li>Book UK/Ireland Destination Immersion (planned April); Travel Week Europe moves to Amsterdam</li>
+                        <li>Share unified entry policy talking points with your trade partners in European markets</li>
+                        <li>Register international buyers/media for IPW before March 2 — appointments open then</li>
+                    </ul>
+                </div>
+            </div><!-- /region-europe -->
+
+            <!-- SOUTH AMERICA -->
+            <div id="region-southamerica" class="region-panel">
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">3M</div><div class="sc-label">Colombia + Brazil combined annual visitors to the US</div></div>
+                    <div class="stat-card blue"><div class="sc-num">+15%</div><div class="sc-label">Argentina growth in 2025 — economic stabilization driving travel</div></div>
+                    <div class="stat-card"><div class="sc-num">+5–12%</div><div class="sc-label">South American currencies appreciating vs. weakening USD</div></div>
+                    <div class="stat-card navy"><div class="sc-num">35</div><div class="sc-label">Partners signed for inaugural Travel Week South America — March 2026</div></div>
+                </div>
+
+                <div class="table-scroll"><table class="data-table">
+                    <thead><tr><th>Market</th><th>2025 Trend</th><th>Key Metric</th><th>2026 Context</th></tr></thead>
+                    <tbody>
+                        <tr><td>🇨🇴 Colombia</td><td class="trend-up">↑ +5% Record</td><td>1.1M visitors</td><td>January 2026 +17% despite earlier US-Colombia geopolitical tensions</td></tr>
+                        <tr><td>🇧🇷 Brazil</td><td class="trend-flat">→ Stable</td><td>2M visitors</td><td>Luxury market; ski/winter destinations strong; fastest CTV adoption in Latin America</td></tr>
+                        <tr><td>🇦🇷 Argentina</td><td class="trend-up">↑ +15%</td><td>Double-digit monthly</td><td>Delta/LATAM JV first full year; traveling to US cheaper than domestic</td></tr>
+                        <tr><td>🇨🇱 Chile</td><td class="trend-up">↑ Growing</td><td>Only SA visa waiver</td><td>Only South American country with US visa waiver — natural entry point</td></tr>
+                        <tr><td>🇵🇪 Peru</td><td class="trend-up">↑ Growing</td><td>Increasing interest</td><td>Included in Travel Week SA buyers delegation</td></tr>
+                    </tbody>
+                </table></div>
+
+                <div class="highlight-box">
+                    <h4>Copa Airlines — The Hidden Highway</h4>
+                    <p>15 US gateways via Panama City hub — 40-minute connections. Serves 10 cities in Colombia, 6–7 in Brazil. Adds: Denver, Austin, Tampa, Baltimore, Raleigh. Most South Americans already connect (Argentina 67%, Brazil 65%, Colombia 50%) — Copa turns this into a competitive advantage, opening dozens of South American cities to secondary US markets.</p>
+                </div>
+
+                <div class="section-label">Travel Week South America — March 2026 (Inaugural)</div>
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">35</div><div class="sc-label">Partner destinations signed up</div></div>
+                    <div class="stat-card blue"><div class="sc-num">60–64</div><div class="sc-label">Buyers expected (Brazil &amp; Colombia lead)</div></div>
+                    <div class="stat-card"><div class="sc-num">16</div><div class="sc-label">Journalists targeted</div></div>
+                    <div class="stat-card navy"><div class="sc-num">3</div><div class="sc-label">Tracks: Trade, PR &amp; C-Suite</div></div>
+                </div>
+
+                <div class="quotes-grid">
+                    <div class="quote-card featured">
+                        <span class="quote-mark">"</span>
+                        <p class="quote-text">South Americans are less sensitive to geopolitical noise than other markets.</p>
+                        <div class="quote-attr"><span>Malcolm Smith</span> · Brand USA</div>
+                    </div>
+                    <div class="quote-card">
+                        <span class="quote-mark">"</span>
+                        <p class="quote-text">Brazil: 49% of Brazilians make travel plans based on social media. It's the fastest market to shift to CTV — that happened overnight last year.</p>
+                        <div class="quote-attr"><span>Chris Heywood</span> · Brand USA PR</div>
+                    </div>
+                </div>
+
+                <div class="takeaway-bar">
+                    <h4>South America Key Actions</h4>
+                    <ul>
+                        <li>Luxury angle for Brazil — ski (Vail, Aspen, Colorado) and winter destinations perform strongly with high-spending Brazilian families</li>
+                        <li>Digital spend is cost-effective: $5K–$10K in Argentina or Colombia delivers strong targeted results</li>
+                        <li>World Cup is a broadcast opportunity — Brazil, Colombia, Argentina are massive soccer markets with games in 5 US cities</li>
+                        <li>C-Suite track at Travel Week SA: flag interest in US consulate-hosted experiences</li>
+                    </ul>
+                </div>
+            </div><!-- /region-southamerica -->
+
+            <!-- ASIA PACIFIC -->
+            <div id="region-asiapacific" class="region-panel">
+                <div class="table-scroll"><table class="data-table">
+                    <thead><tr><th>Market</th><th>Status</th><th>Key Metric</th><th>2026 Priority</th></tr></thead>
+                    <tbody>
+                        <tr><td>🇨🇳 China</td><td class="trend-down">Diplomatic pause</td><td>Marketing prohibited</td><td>Could activate immediately if diplomatic relations shift; Chinese still attending IPW (YoY growth)</td></tr>
+                        <tr><td>🇮🇳 India</td><td class="trend-down">↓ -6%</td><td>2M+, #2 overseas market</td><td>-6% off a record +24% base year; leisure travel actually UP; GDP to $10T by 2032</td></tr>
+                        <tr><td>🇯🇵 Japan</td><td class="trend-up">↑ Recovering</td><td>Consistent monthly</td><td>MLB/Ohtani hook; mainland expansion beyond Hawaii underway</td></tr>
+                        <tr><td>🇰🇷 Korea</td><td class="trend-up">↑ Strong H2</td><td>Political recovery</td><td>New airlift (SLC, Newark); potential 2027 media mission pilot</td></tr>
+                        <tr><td>🇦🇺 Australia</td><td class="trend-down">↓ -6% arrivals</td><td>Revenues UP</td><td>Sentiment tough; behavior outperforms; new PR agency (Walter Group)</td></tr>
+                        <tr><td>🌏 SE Asia</td><td class="trend-up">↑ Growing</td><td>New airlift</td><td>United aggressive expansion; small mission April 2026; Asia Pacific Travel Week 2028 possible</td></tr>
+                    </tbody>
+                </table></div>
+
+                <div class="highlight-box">
+                    <h4>China: Diplomatic Pause</h4>
+                    <p>"Until Washington and Beijing come to some semblance of diplomacy and dialogue, we are prohibited from going into China." Brand USA paused its China rep firm RFP immediately after the 2024 election. Chinese delegates are still attending IPW (year-over-year growth). The program could restart at any time — the infrastructure is ready.</p>
+                </div>
+
+                <div class="section-label">India — The Market to Watch</div>
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">2M+</div><div class="sc-label">#2 overseas inbound market — second consecutive year</div></div>
+                    <div class="stat-card blue"><div class="sc-num">$10T</div><div class="sc-label">India projected GDP by 2032 (from $4T today)</div></div>
+                    <div class="stat-card"><div class="sc-num">90%+</div><div class="sc-label">Indian travelers who anticipate going abroad regardless of conditions</div></div>
+                    <div class="stat-card navy"><div class="sc-num">#2</div><div class="sc-label">India's rank as inbound market for both Atlanta and Philadelphia</div></div>
+                </div>
+
+                <div class="quotes-grid">
+                    <div class="quote-card featured">
+                        <span class="quote-mark">"</span>
+                        <p class="quote-text">India is THE market. Unlike China, which will always be a start-stop type of relationship, India is going to be constant.</p>
+                        <div class="quote-attr"><span>Malcolm Smith</span> · Brand USA</div>
+                    </div>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-box"><div class="insight-icon">💎</div><h4>Luxury-Oriented Profile</h4><p>Upscale travelers who want to spend and showcase on social media. Both FIT and group tours. VFR visitors now also traveling widely within the US — not just staying with family.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🏙️</div><h4>Tier 2/3 Cities Growing</h4><p>Affluent middle class in smaller Indian cities is a major untapped segment. Brand USA hosted ~100 buyers from 17+ cities; Tier 2/3 outreach is intentional and strategic.</p></div>
+                    <div class="insight-box"><div class="insight-icon">✈️</div><h4>Airlines Doubling Fleets</h4><p>Indian carriers doubling widebody aircraft orders — more connectivity coming. Competition: Europe (long-haul), Dubai/UAE (~4 hours), Hong Kong (~4 hours).</p></div>
+                </div>
+
+                <div class="section-label">Australia — Behavior Outperforming Sentiment</div>
+                <div class="insights-grid">
+                    <div class="insight-box"><div class="insight-icon">🏈</div><h4>Sports Driving Awareness</h4><p>NFL heading to Australia. NBA/NFL merchandise extremely visible on streets. ZIP Air doing Tokyo–Orlando charters packaged with Disney. Sports as a cultural bridge to travel.</p></div>
+                    <div class="insight-box"><div class="insight-icon">📣</div><h4>New PR Agency: Walter Group</h4><p>Also works with Delta. Gate 7 continuing on trade side. Brand USA in Australia this weekend: IMN media marketplace, Global Entry facilitation with CBP, B2B trade event (50+ attendees).</p></div>
+                </div>
+
+                <div class="takeaway-bar">
+                    <h4>Asia Pacific Key Actions</h4>
+                    <ul>
+                        <li>India: prioritize Tier 2/3 city outreach — affluent middle class is the fastest-growing segment</li>
+                        <li>Japan: use MLB/Shohei Ohtani as the hook; expand mainland itineraries beyond Hawaii</li>
+                        <li>Korea: flag interest in 2027 media mission pilot (5–10 partner slots being scoped)</li>
+                        <li>Australia: push affordable value messaging; safety perception gap needs proactive earned media</li>
+                        <li>Asia Pacific Travel Week 2028 (Tokyo): early expression of interest invited now</li>
+                    </ul>
+                </div>
+            </div><!-- /region-asiapacific -->
+
+            <!-- CANADA -->
+            <div id="region-canada" class="region-panel">
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">16M</div><div class="sc-label">Canadians still came in 2025 — still Brand USA's #2 inbound market</div></div>
+                    <div class="stat-card blue"><div class="sc-num">-22%</div><div class="sc-label">Total arrivals decline — 4.1 million fewer visitors YOY</div></div>
+                    <div class="stat-card"><div class="sc-num">-14%</div><div class="sc-label">Air market decline only — border/drive market is the larger gap</div></div>
+                    <div class="stat-card navy"><div class="sc-num">$22.4M</div><div class="sc-label">Combined hotel + air bookings from Canada Opti Campaign (27 partners)</div></div>
+                </div>
+
+                <div class="quotes-grid">
+                    <div class="quote-card featured">
+                        <span class="quote-mark">"</span>
+                        <p class="quote-text">Feelings are raw and sensitive in the Canadian market. But 16 million Canadians still came.</p>
+                        <div class="quote-attr"><span>Jackie Ennis</span> · Brand USA</div>
+                    </div>
+                </div>
+
+                <div class="section-label">Canada Opti Campaign — Fall 2025 Results (27 Partners)</div>
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">144M</div><div class="sc-label">Impressions</div></div>
+                    <div class="stat-card blue"><div class="sc-num">50K</div><div class="sc-label">Hotel room nights booked</div></div>
+                    <div class="stat-card"><div class="sc-num">$11M</div><div class="sc-label">Hotel bookings generated</div></div>
+                    <div class="stat-card navy"><div class="sc-num">$11.4M</div><div class="sc-label">Air bookings generated</div></div>
+                </div>
+
+                <div class="section-label">Bright Spots — What's Working</div>
+                <div class="insights-grid">
+                    <div class="insight-box"><div class="insight-icon">🚀</div><h4>Porter Airlines — Major Expansion</h4><p>Now at Pearson, Ottawa, Montreal. New US leisure gateways: Austin, Palm Springs, Phoenix, Vegas, 5 Florida destinations, LA. Stepping up as WestJet and Air Transat pull back from US routes.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🌴</div><h4>Palm Springs Model</h4><p>"Haven't seen really any change in their Canadian visitation." Destination-first messaging works where Brand USA broader messaging doesn't right now. Individual destination brands are getting more traction.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🏔️</div><h4>Colorado Playbook</h4><p>Flights +2%, visitation +1%. Governor flew the Canadian flag; held annual Canada Friendship Day. 272+ companies, 25,000+ Canadians working in Colorado = built-in VFR pipeline. Working with Consulate Generals on MOUs.</p></div>
+                    <div class="insight-box"><div class="insight-icon">🤫</div><h4>Silent / Quiet Tourism</h4><p>Many Canadians still coming for concerts and sporting events — without touting it publicly. Bookings are happening; the politics are loud but the behavior is quieter than the headlines suggest.</p></div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Spring Canada Campaign Launching</h4>
+                    <p>America the Beautiful umbrella with "destination first" messaging (e.g., "Denver the Bold"). Canada Destination Immersion moved from April to October for better timing. Content creators and influencers being explored as an alternative channel while traditional Canadian media remains resistant. Fred Dixon planning a market visit later in 2026.</p>
+                </div>
+
+                <div class="takeaway-bar">
+                    <h4>Canada Strategy</h4>
+                    <ul>
+                        <li>Destination-first messaging works better than the Brand USA umbrella right now — let your brand lead</li>
+                        <li>Air vs. drive split matters for strategy: air down 14%, border/drive is the bigger problem</li>
+                        <li>Monitor Porter Airlines as the leading indicator of sentiment recovery</li>
+                        <li>"When you're ready, we're ready" — Maine and Massachusetts messaging is landing with Canadians</li>
+                        <li>Share the Opti Campaign results with your leadership: $22.4M in bookings from 27 partners</li>
+                    </ul>
+                </div>
+            </div><!-- /region-canada -->
+
+            <!-- MEXICO -->
+            <div id="region-mexico" class="region-panel">
+                <div class="stat-cards">
+                    <div class="stat-card"><div class="sc-num">#1</div><div class="sc-label">Mexico is now Brand USA's #1 international inbound market</div></div>
+                    <div class="stat-card blue"><div class="sc-num">+9%</div><div class="sc-label">Growth in 2025 — 1.2 million visitors</div></div>
+                    <div class="stat-card"><div class="sc-num">&gt;25%</div><div class="sc-label">Of all US international visitation — over a quarter of the market</div></div>
+                    <div class="stat-card navy"><div class="sc-num">33</div><div class="sc-label">Volaris direct routes to US in 2026 — 11 brand new</div></div>
+                </div>
+
+                <div class="quotes-grid">
+                    <div class="quote-card featured">
+                        <span class="quote-mark">"</span>
+                        <p class="quote-text">A market we cannot underestimate or deprioritize.</p>
+                        <div class="quote-attr"><span>Jackie Ennis</span> · Brand USA</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>11 New Volaris Direct Routes From Mexico in 2026</h4>
+                    <p>Detroit, Salt Lake City, Houston, LA, Newark, Dallas, Orlando, San Antonio — plus first-ever direct flights from Querétaro, Puebla, and Guadalajara. Mexico's airlift infrastructure is expanding faster than any other inbound market. Alaska (the state) is a top requested destination from Mexican travel agents.</p>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-box"><div class="insight-icon">⚽</div><h4>Passion Points</h4><p>Sports, concerts, short breaks, shopping. World Cup will be enormous — games in New York, Philadelphia, Miami, Dallas, Kansas City. Even non-attending Mexican fans = massive broadcast audience for US advertising.</p></div>
+                    <div class="insight-box"><div class="insight-icon">📱</div><h4>Digital-First</h4><p>TikTok, Instagram, short-form video, connected TV are mainstream. Very social media-driven decision-making. The channel mix to reach Mexican travelers is increasingly digital-native.</p></div>
+                    <div class="insight-box"><div class="insight-icon">💪</div><h4>Strong Peso</h4><p>Peso has strengthened vs. USD year-on-year — improving affordability on top of already strong travel interest. One of the tailwinds Brand USA needs to protect.</p></div>
+                    <div class="insight-box"><div class="insight-icon">⚠️</div><h4>Competition</h4><p>Europe is major competitor for affluent Mexican travelers. Turkey is a price threat: "sometimes cheaper to go to Turkey than to Houston." Middle East also competing aggressively.</p></div>
+                </div>
+
+                <div class="takeaway-bar">
+                    <h4>Mexico Key Actions</h4>
+                    <ul>
+                        <li>Mexico South Mission: annual January in-market sales mission (230 partners most recently) — plan for January 2027 now</li>
+                        <li>World Cup is the biggest Mexico opportunity in a generation — games in 5 US cities with massive fan bases</li>
+                        <li>TikTok and Instagram are primary discovery channels — digital-first creative is essential</li>
+                        <li>Watch Volaris route announcements — 11 new routes create new city-pair opportunities</li>
+                    </ul>
+                </div>
+            </div><!-- /region-mexico -->
+
+        </div><!-- /region-wrap -->
+    </div><!-- /panel-d2markets -->
+
+    <!-- D2-3: PARTNER RESOURCES -->
+    <div class="panel" id="panel-d2resources">
+        <div class="panel-header">
+            <div class="panel-eyebrow">11:15 – 11:40 AM · Session 3</div>
+            <div class="panel-title">Evolving Partner Resources</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-malcolm">M</span>Malcolm Smith</span>
+                <span class="speaker-chip"><span class="speaker-dot av-sean">S</span>Sean Bayliss</span>
+                <span class="speaker-chip"><span class="speaker-dot av-jackie">J</span>Jackie Ennis</span>
+            </div>
+            <p class="panel-summary">Malcolm Smith and Sean Bayliss unveiled the World Ready Program — Brand USA's most comprehensive product development initiative. Jackie Ennis shared how the Market Expansion Initiative already delivered two new direct flights from Rome to Seattle.</p>
+        </div>
+
+        <div class="program-cards">
+            <div class="program-card">
+                <div class="program-num">01</div>
+                <h3>World Ready Program</h3>
+                <p>"Product development training on steroids." Takes US partners through the full international distribution cycle: identify product → engage trade → connect with receptive operators, international tour operators &amp; OTAs → get product bookable online. Regional focus uses gateway city/airport clusters.</p>
+                <p style="margin-top:8px;font-size:0.77rem;color:var(--slate);">OTA partnerships signed: <strong>GetYourGuide + Viator</strong> (exclusive Brand USA programs; incentives and education fees included). IPW 2028 in Detroit and World Cup 2026 are near-term activation anchors.</p>
+                <span class="program-tag">New in FY27</span>
+            </div>
+            <div class="program-card p2">
+                <div class="program-num">02</div>
+                <h3>Market Expansion Initiative</h3>
+                <p>Helps established US destinations gain exposure in markets where they have airlift but not yet prominence. Takes destinations in-market to meet tour operators, US Commercial Service, airlines, and trade media.</p>
+                <p style="margin-top:8px;font-size:0.77rem;color:var(--slate);"><strong>Results:</strong> Italy mission with Seattle, Utah, DC, Puerto Rico → two new Rome–Seattle routes (Delta + Alaska, same week). Utah now leading its own Italy mission. Spain version coming: Chicago, Atlanta, Dallas joining.</p>
+                <span class="program-tag">Proven ROI</span>
+            </div>
+            <div class="program-card p3">
+                <div class="program-num">03</div>
+                <h3>Lakeshore to Gulf Shores</h3>
+                <p>Multi-destination itinerary: Chicago → New Orleans with Alabama. Medical tourism angle included. Website live and running. Great Lakes regional partnership road-ready for IPW.</p>
+                <span class="program-tag">Multi-Region</span>
+            </div>
+        </div>
+
+        <div class="quotes-grid">
+            <div class="quote-card featured">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Lo and behold, now we have two new direct flights from Rome to Seattle.</p>
+                <div class="quote-attr"><span>Jackie Ennis</span> · On Market Expansion Initiative results</div>
+            </div>
+        </div>
+
+        <div class="section-label">Destination Growth Missions</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">🔄</div><h4>Renamed from "Immersion Program"</h4><p>Deep-dive market visits identifying US destinations with demand in markets where they have no in-market presence — renamed to avoid confusion with Mega PAMs / Destination Immersions.</p></div>
+            <div class="insight-box"><div class="insight-icon">🌐</div><h4>Technology Bridge</h4><p>Piloting video translation technology for multilingual training — a single speaker can train operators in multiple languages simultaneously. Philadelphia training with Manitoba operators via translated webinar is the pilot model.</p></div>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>Session 3 Takeaways</h4>
+            <ul>
+                <li>World Ready: if you're not yet in international distribution, this is the structured program to get there</li>
+                <li>Market Expansion Initiative: Italy mission → two Rome–Seattle routes. Flag your market aspirations to Jackie Ennis</li>
+                <li>GetYourGuide + Viator now official OTA partners — product needs to be bookable online to benefit</li>
+                <li>IPW 2028 is in Detroit — start building your World Ready strategy around Great Lakes now</li>
+            </ul>
+        </div>
+    </div><!-- /panel-d2resources -->
+
+    <!-- D2-4: CONTINUED ENGAGEMENT -->
+    <div class="panel" id="panel-d2action">
+        <div class="panel-header">
+            <div class="panel-eyebrow">11:40 AM – 12:00 PM · Closing</div>
+            <div class="panel-title">Continued Engagement: Turning Insights Into Action</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-angie">A</span>Angie Briggs</span>
+                <span class="speaker-chip"><span class="speaker-dot av-fred">F</span>Fred Dixon</span>
+                <span class="speaker-chip"><span class="speaker-dot av-janette">J</span>Janette Roush</span>
+            </div>
+            <p class="panel-summary">The session closed with partnership infrastructure updates, Brand USA's AI webinar series, and Fred Dixon's candid assessment of the funding outlook — including one date every partner should have on their radar.</p>
+        </div>
+
+        <div class="highlight-box" style="background: linear-gradient(135deg, #6B0000, #101F36);">
+            <h4>⚠️ October 1, 2026 — The Date to Know</h4>
+            <p>Current year budget: <strong>$258M</strong> (confirmed). If reauthorization doesn't pass, October 1 (new fiscal year) represents approximately a one-third cut from current funding. Brand USA is on pace to exceed the $20M partner funding cap and is "sitting on go" should the cap be lifted legislatively. Congressional support is strong — "a couple of people on the Hill have been roadblocking" — but the overall case is remarkable.</p>
+        </div>
+
+        <div class="section-label">Airline Partnerships (Angie Briggs)</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">✈️</div><h4>Early Alerts Welcomed</h4><p>Partners want airline partnership opportunities flagged early — even when programs are still being developed. Provide placeholders so partners can plan months in advance of formal launch.</p></div>
+            <div class="insight-box"><div class="insight-icon">🎟️</div><h4>Las Vegas Model</h4><p>Instant travel incentives: $75–$150 per booking for a defined period. Very effective for lower-funnel conversion. A scalable model for other destination partners to consider for gateway partnerships.</p></div>
+        </div>
+
+        <div class="section-label">Partner Success Portal</div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">🔒</div><h4>Behind the Firewall</h4><p>Requires approval for access. Monthly partner newsletter sent the third week of each month — includes new features, upcoming deadlines, and calls for content.</p></div>
+            <div class="insight-box"><div class="insight-icon">💬</div><h4>Online Focus Groups Coming</h4><p>Watch for survey in the partner newsletter. Your feedback directly shapes what gets built next in the portal.</p></div>
+        </div>
+
+        <div class="section-label">Agents of Change Webinar Series (Janette Roush)</div>
+        <div class="quotes-grid">
+            <div class="quote-card featured">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Our goal is to pull the whole industry along with us. It makes us stronger and more competitive globally to be ahead of the curve on AI adoption.</p>
+                <div class="quote-attr"><span>Angie Briggs</span> · Brand USA</div>
+            </div>
+        </div>
+        <div class="insights-grid">
+            <div class="insight-box"><div class="insight-icon">📺</div><h4>Monthly AI Webinar Series</h4><p>Practical AI use cases for the tourism industry. Free, built for the partner network. Recordings available on Brand USA website — share with your team.</p></div>
+            <div class="insight-box"><div class="insight-icon">📋</div><h4>Public Affairs Collateral</h4><p>New Hill leave-behinds in your packet: (1) America the Beautiful one-sheeter written for legislators; (2) international tourism impact + Brand USA work one-sheeter. Brand USA can't lobby — but you can share.</p></div>
+        </div>
+
+        <div class="quotes-grid">
+            <div class="quote-card featured">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Building tomorrow's demand is the driving motto for us every day.</p>
+                <div class="quote-attr"><span>Fred Dixon</span> · President &amp; CEO, Brand USA</div>
+            </div>
+            <div class="quote-card">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">We're very bullish about where we can go and where we will go together.</p>
+                <div class="quote-attr"><span>Fred Dixon</span></div>
+            </div>
+        </div>
+
+        <div class="takeaway-bar">
+            <h4>Final Action Items</h4>
+            <ul>
+                <li>Register international buyers and media for IPW before <strong>February 27</strong> (rate increase) and <strong>March 2</strong> (appointments open)</li>
+                <li>October 1, 2026 is the funding date to watch — stay engaged on reauthorization advocacy</li>
+                <li>Access the Partner Success Portal; subscribe to the monthly newsletter (third week of each month)</li>
+                <li>Share Agents of Change webinar series with your teams — recordings available now at brandusa.com</li>
+                <li>Full written recap from Brand USA team arriving next week</li>
+                <li>Flag airline gateway partnership needs early — placeholders welcome even when programs are still forming</li>
+            </ul>
+        </div>
+    </div><!-- /panel-d2action -->
+
+</div><!-- /panels-day2-inner --></div><!-- /panels-day2 -->
 
 <!-- FOOTER -->
 <footer>
@@ -921,17 +1488,39 @@
           </g>
         </svg>
     </div>
-    <p>FY27 Strategic Planning · Partner Input Session · Day 1 · February 19, 2026</p>
+    <p>FY27 Strategic Planning · Partner Input Session · February 19–20, 2026</p>
     <p style="margin-top:4px;font-size:0.65rem;opacity:0.5;">Internal use only</p>
 </footer>
 
 <script>
     function switchPanel(id) {
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.session-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('.day-panels-wrap.active').querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('.day-nav.active').querySelectorAll('.session-tab').forEach(t => t.classList.remove('active'));
         document.getElementById('panel-' + id).classList.add('active');
         event.currentTarget.classList.add('active');
-        document.querySelector('.session-nav').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        document.querySelector('.day-toggle').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function switchDay(day) {
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-day="' + day + '"]').classList.add('active');
+        document.querySelectorAll('.day-nav').forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('.day-panels-wrap').forEach(p => p.classList.remove('active'));
+        document.getElementById('nav-day' + day).classList.add('active');
+        document.getElementById('panels-day' + day).classList.add('active');
+        var allPanels = document.querySelectorAll('#panels-day' + day + ' > div > .panel');
+        var allTabs = document.querySelectorAll('#nav-day' + day + ' .session-tab');
+        allPanels.forEach(function(p) { p.classList.remove('active'); });
+        allTabs.forEach(function(t) { t.classList.remove('active'); });
+        if (allPanels[0]) allPanels[0].classList.add('active');
+        if (allTabs[0]) allTabs[0].classList.add('active');
+        document.querySelector('.day-toggle').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function switchRegion(btn, id) {
+        var wrap = btn.closest('.region-wrap');
+        wrap.querySelectorAll('.region-panel').forEach(function(p) { p.classList.remove('active'); });
+        wrap.querySelectorAll('.region-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.getElementById('region-' + id).classList.add('active');
+        btn.classList.add('active');
     }
 </script>
 </body>
