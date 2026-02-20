@@ -199,9 +199,61 @@
         .footer-logo svg { height: 50px; width: auto; }
         footer p { color: var(--pond); font-size: 0.75rem; margin-top: 6px; }
 
-        @media (max-width: 680px) {
-            nav, .hero, .panels, footer { padding-left: 20px; padding-right: 20px; }
-            .session-tab { min-width: 130px; padding: 12px 16px 10px; }
+        /* ── DATA TABLE SCROLL WRAPPER ── */
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 28px; }
+        .table-scroll .data-table { margin-bottom: 0; }
+
+        @media (max-width: 768px) {
+            /* Nav */
+            nav { padding: 0 16px; height: 56px; }
+            nav .nav-logo svg { height: 32px; }
+            .logo-divider, .nav-session { display: none; }
+
+            /* Hero */
+            .hero { padding: 36px 20px 32px; }
+            .stats-row { gap: 20px; }
+            .stat-num { font-size: 1.6rem; }
+
+            /* Session tab nav — compact horizontal scroll */
+            .session-nav { border-bottom-width: 1px; }
+            .session-tab {
+                min-width: 0;
+                padding: 10px 14px 8px;
+                flex-shrink: 0;
+            }
+            .tab-time { font-size: 0.58rem; letter-spacing: 0; }
+            .tab-title { font-size: 0.78rem; white-space: nowrap; }
+            .tab-speakers { display: none; }
+
+            /* Panels */
+            .panels { padding: 28px 16px; }
+            .panel-title { font-size: 1.3rem; }
+            .panel-summary { font-size: 0.85rem; }
+
+            /* Cards — single column on small screens */
+            .stat-cards { grid-template-columns: repeat(2, 1fr); }
+            .quotes-grid { grid-template-columns: 1fr; }
+            .insights-grid { grid-template-columns: 1fr; }
+            .program-cards { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+
+            /* Takeaway bar */
+            .takeaway-bar ul { grid-template-columns: 1fr; }
+
+            /* Speaker blocks */
+            .speaker-block { padding: 16px; }
+            .speaker-block-header { gap: 10px; }
+
+            /* Timeline */
+            .timeline-content { padding: 12px 14px; }
+
+            /* Footer */
+            footer { padding: 24px 20px; }
+        }
+
+        @media (max-width: 400px) {
+            .stat-cards { grid-template-columns: 1fr; }
+            .tab-title { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -496,7 +548,7 @@
         </div>
 
         <div class="section-label">Overseas Market Performance — Full Year 2025 (excl. Canada &amp; Mexico)</div>
-        <table class="data-table">
+        <div class="table-scroll"><table class="data-table">
             <thead>
                 <tr><th>Market</th><th>Trend</th><th>Notes</th></tr>
             </thead>
@@ -514,7 +566,7 @@
                 <tr><td>🇩🇪 Germany / 🇫🇷 France</td><td class="trend-down">↓ Softening</td><td>Both down YOY; national parks fee concerns flagged by Germany office</td></tr>
                 <tr><td>🇨🇳 China</td><td class="trend-down">↓ Softening</td><td>Down YOY; long-term recovery extends into 2030s</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <div class="section-label">Forward Forecast — Tourism Economics</div>
         <div class="stat-cards">
