@@ -287,6 +287,57 @@
         .av-cassidy { background: linear-gradient(135deg, #878F9A, #4C5768); }
 
         @media (max-width: 768px) { .day-toggle { padding: 8px 16px; } }
+
+        /* ── AI STRATEGY BLUEPRINT ── */
+        .blueprint-intro { background: var(--white); border-radius: 10px; padding: 28px; margin-bottom: 28px; box-shadow: 0 2px 8px rgba(16,31,54,0.06); border-left: 4px solid var(--cyan); }
+        .blueprint-intro p { font-size: 0.88rem; color: var(--slate); line-height: 1.7; }
+        .blueprint-intro p + p { margin-top: 10px; }
+        .blueprint-intro strong { color: var(--navy); }
+
+        .strategy-phase { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(16,31,54,0.07); margin-bottom: 24px; }
+        .phase-header { padding: 20px 24px 16px; display: flex; align-items: flex-start; gap: 16px; border-bottom: 1px solid var(--cream); }
+        .phase-number { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--white); flex-shrink: 0; }
+        .phase-number.p1 { background: var(--cyan); }
+        .phase-number.p2 { background: var(--usa-blue); }
+        .phase-number.p3 { background: linear-gradient(135deg, var(--usa-blue), var(--cyan)); }
+        .phase-number.p4 { background: linear-gradient(135deg, var(--cyan), #00549F); }
+        .phase-number.p5 { background: var(--navy); }
+        .phase-meta h3 { font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; }
+        .phase-meta .phase-goal { font-size: 0.8rem; color: var(--slate); margin-top: 3px; font-style: italic; }
+        .phase-body { padding: 20px 24px 24px; }
+
+        .checklist { list-style: none; margin: 0; padding: 0; }
+        .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(244,239,227,0.6); font-size: 0.84rem; color: var(--slate); line-height: 1.6; }
+        .checklist li:last-child { border-bottom: none; }
+        .checklist .check { width: 18px; height: 18px; border: 2px solid var(--pond); border-radius: 3px; flex-shrink: 0; margin-top: 3px; }
+        .checklist .check.filled { background: var(--cyan); border-color: var(--cyan); position: relative; }
+        .checklist .check.filled::after { content: '✓'; position: absolute; top: -2px; left: 2px; color: var(--white); font-size: 0.7rem; font-weight: 700; }
+        .checklist strong { color: var(--navy); }
+
+        .template-field { background: var(--cream); border-radius: 6px; padding: 10px 14px; margin-top: 6px; font-size: 0.82rem; color: var(--pond); font-style: italic; border-left: 3px solid var(--cyan); min-height: 36px; }
+
+        .partner-voices { background: linear-gradient(135deg, rgba(0,169,224,0.06), rgba(0,84,159,0.06)); border-radius: 10px; padding: 24px; margin-bottom: 28px; }
+        .partner-voices h4 { font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
+        .voice-card { background: var(--white); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(16,31,54,0.05); }
+        .voice-card:last-child { margin-bottom: 0; }
+        .voice-quote { font-size: 0.82rem; color: var(--slate); line-height: 1.6; font-style: italic; margin-bottom: 6px; }
+        .voice-source { font-size: 0.68rem; font-weight: 700; color: var(--pond); text-transform: uppercase; letter-spacing: 1px; }
+
+        .strategy-summary { background: linear-gradient(135deg, var(--usa-blue), var(--navy)); border-radius: 12px; padding: 32px; margin-bottom: 28px; text-align: center; }
+        .strategy-summary h3 { font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--white); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .strategy-summary p { font-size: 0.92rem; color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 700px; margin: 0 auto; }
+        .strategy-summary .five-qs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+        .strategy-summary .q-pill { background: rgba(0,169,224,0.2); border: 1px solid rgba(0,169,224,0.35); color: var(--cyan); font-size: 0.72rem; font-weight: 700; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+        .strategy-summary .q-arrow { color: rgba(255,255,255,0.3); font-size: 0.8rem; display: flex; align-items: center; }
+
+        @media (max-width: 768px) {
+            .phase-header { padding: 16px; }
+            .phase-body { padding: 16px; }
+            .strategy-summary { padding: 24px 16px; }
+            .strategy-summary .five-qs { gap: 6px; }
+            .strategy-summary .q-arrow { display: none; }
+            .strategy-summary .q-pill { font-size: 0.65rem; padding: 4px 8px; }
+        }
     </style>
 </head>
 <body>
@@ -362,6 +413,11 @@
         <div class="tab-time">4:15 – 5:00</div>
         <div class="tab-title">AI &amp; Innovation</div>
         <div class="tab-speakers">Janette Roush</div>
+    </button>
+    <button class="session-tab" onclick="switchPanel('aistrategy')">
+        <div class="tab-time">Resource</div>
+        <div class="tab-title">Your AI Strategy</div>
+        <div class="tab-speakers">Strategy Blueprint &amp; Template</div>
     </button>
 </div><!-- /nav-day1 -->
 
@@ -605,7 +661,7 @@
             <div class="insight-box" style="border-left:4px solid #1a9e4a; padding: 18px;">
                 <div class="insight-icon">🇲🇽</div>
                 <h4>Mexico: Counterbalance</h4>
-                <p>UP — <strong>1.2 million additional visitors</strong> vs. prior year. Mexico is now the #1 inbound market for the United States, and growth continues to accelerate. A critical market to protect and build in FY27.</p>
+                <p>UP — <strong>1.2 million additional visitors</strong> vs. prior year, for a total of <strong>18.5 million</strong>. Mexico is now the #1 inbound market for the United States, and growth continues to accelerate. A critical market to protect and build in FY27.</p>
             </div>
         </div>
 
@@ -961,6 +1017,220 @@
         </div>
     </div>
 
+    <!-- 6. AI STRATEGY BLUEPRINT -->
+    <div class="panel" id="panel-aistrategy">
+        <div class="panel-header">
+            <div class="panel-eyebrow">Partner Resource · From the AI &amp; Innovation Session</div>
+            <div class="panel-title">Building Your DMO's AI Strategy: A Five-Part Blueprint</div>
+            <div class="panel-speakers-row">
+                <span class="speaker-chip"><span class="speaker-dot av-janette">J</span>Janette Roush, SVP Innovation &amp; Chief AI Officer</span>
+            </div>
+            <p class="panel-summary">During the Q&amp;A, one partner asked: "Who has an AI strategy?" The room went quiet. Every organization that spoke confirmed they're experimenting — yet none have a formal strategy. This blueprint turns the session's insights and your peer feedback into a five-part framework you can take home and build from.</p>
+        </div>
+
+        <!-- WHERE DMOs ARE -->
+        <div class="section-label">Where DMOs Are Right Now</div>
+
+        <div class="blueprint-intro">
+            <p><strong>The gap:</strong> Most DMOs are using AI for internal productivity — drafting copy, summarizing research, cleaning up meeting notes. These are valuable efficiency gains. Yet almost no one is thinking about AI as a <strong>distribution channel</strong> for their destination — which is the actual strategic shift happening right now.</p>
+            <p>When the web emerged in the late '90s, DMOs that treated it as "just a brochure online" fell behind. DMOs that treat AI as "just a chatbot" will fall behind the same way. <strong>AI is a new distribution model for your content.</strong></p>
+        </div>
+
+        <!-- THE 5 PARTS -->
+        <div class="strategy-summary">
+            <h3>A DMO AI Strategy Answers Five Questions in Order</h3>
+            <div class="five-qs">
+                <span class="q-pill">What are we allowed to do?</span>
+                <span class="q-arrow">→</span>
+                <span class="q-pill">How do we build skill?</span>
+                <span class="q-arrow">→</span>
+                <span class="q-pill">How do we prove value?</span>
+                <span class="q-arrow">→</span>
+                <span class="q-pill">How do we get discovered?</span>
+                <span class="q-arrow">→</span>
+                <span class="q-pill">How do we become the source of truth?</span>
+            </div>
+        </div>
+
+        <!-- PHASE 1: POLICY -->
+        <div class="strategy-phase">
+            <div class="phase-header">
+                <div class="phase-number p1">1</div>
+                <div class="phase-meta">
+                    <h3>Policy — The Guardrails</h3>
+                    <div class="phase-goal">What are we allowed to do?</div>
+                </div>
+            </div>
+            <div class="phase-body">
+                <p style="font-size:0.84rem;color:var(--slate);line-height:1.7;margin-bottom:14px;">Most DMOs either have this or are building it. It answers: what tools are approved? What data can go into them? Who has licenses? Visit Orlando's model — approved platform, universal access, "no bring your own AI" rule, dedicated trainer — is the gold standard from this room. If you have a policy, you've completed step one. If you have a policy and think you have a strategy, you have step one of five.</p>
+                <ul class="checklist">
+                    <li><span class="check"></span><strong>Approved tools list:</strong> Which AI platforms can staff use? (ChatGPT, Copilot, Perplexity, Claude, etc.)</li>
+                    <li><span class="check"></span><strong>Data boundaries:</strong> What information can go into AI tools? What stays internal?</li>
+                    <li><span class="check"></span><strong>License plan:</strong> Who gets paid access? Start with a pilot group, track time saved, use results to justify expansion.</li>
+                    <li><span class="check"></span><strong>BYOAI decision:</strong> Can staff use personal AI accounts for work? Orlando says no — clarity matters either way.</li>
+                </ul>
+                <div class="template-field">Our approved AI tools: ___&emsp;|&emsp;Our data policy: ___&emsp;|&emsp;# of licenses: ___</div>
+            </div>
+        </div>
+
+        <!-- PHASE 2: CAPABILITY -->
+        <div class="strategy-phase">
+            <div class="phase-header">
+                <div class="phase-number p2">2</div>
+                <div class="phase-meta">
+                    <h3>Internal Capability — The Muscle</h3>
+                    <div class="phase-goal">How do we build skill across the organization?</div>
+                </div>
+            </div>
+            <div class="phase-body">
+                <p style="font-size:0.84rem;color:var(--slate);line-height:1.7;margin-bottom:14px;">This is where most DMOs are stuck. Individual employees have figured out copy drafting or meeting notes — but it's scattered, uncoordinated, and invisible to leadership. The strategy move: formalize the learning, name an owner, and make it cross-functional.</p>
+                <ul class="checklist">
+                    <li><span class="check"></span><strong>Name your AI champion:</strong> One person who owns internal adoption and is your candidate for Brand USA's Train the Trainer program.</li>
+                    <li><span class="check"></span><strong>Cross-functional committee:</strong> Philadelphia's model — representatives from multiple departments, meeting regularly, with an outside expert if budget allows.</li>
+                    <li><span class="check"></span><strong>Department audit:</strong> Ask each department: "What is your one biggest problem you'd like AI to help solve?" Then build from there. (Business Hall Eight's approach.)</li>
+                    <li><span class="check"></span><strong>Shared learning rhythm:</strong> Weekly or biweekly internal share-outs. Orlando does Friday training sessions. Tennessee's marketing team keeps each other educated informally. Formalize whichever model fits.</li>
+                    <li><span class="check"></span><strong>Track time saved:</strong> Have your pilot group log hours reclaimed. Use the data to make the case for universal access.</li>
+                </ul>
+                <div class="template-field">Our AI champion: ___&emsp;|&emsp;Learning cadence: ___&emsp;|&emsp;First department pilot: ___</div>
+            </div>
+        </div>
+
+        <!-- PHASE 3: METRICS -->
+        <div class="strategy-phase">
+            <div class="phase-header">
+                <div class="phase-number p3">3</div>
+                <div class="phase-meta">
+                    <h3>Metrics &amp; Board Communication — The Reporting Problem</h3>
+                    <div class="phase-goal">How do we prove value when the old metrics only go down?</div>
+                </div>
+            </div>
+            <div class="phase-body">
+                <p style="font-size:0.84rem;color:var(--slate);line-height:1.7;margin-bottom:14px;">This came up repeatedly and urgently. DMOs are being evaluated on website traffic — a metric that only declines as AI overviews reduce click-throughs. Multiple partners raised this as a governance and funding risk. The strategy: reframe the narrative before the board draws its own conclusions.</p>
+                <ul class="checklist">
+                    <li><span class="check"></span><strong>Stop reporting vanity metrics without context.</strong> Website traffic alone tells an incomplete story. If you must report it, pair it with the explanation of why it's declining industry-wide.</li>
+                    <li><span class="check"></span><strong>Add AI-era metrics alongside traditional ones.</strong> Visit Orlando tracks AI citations — how often the destination appears in AI-generated responses. Easy to pull, and boards find it compelling.</li>
+                    <li><span class="check"></span><strong>Reframe the website's value to your board.</strong> The website's job is now dual: serve visitors AND feed AI systems. Traffic is one measure; discoverability in AI responses is another. The website is infrastructure.</li>
+                    <li><span class="check"></span><strong>Prepare a board-ready narrative:</strong> "Our website traffic is declining because Google and AI tools answer questions before users click through. Our content is working — it's being cited in AI responses. Here's how we're adapting."</li>
+                    <li><span class="check"></span><strong>Agree on new KPIs as a team.</strong> What does success look like now? Get cross-functional alignment before presenting to leadership.</li>
+                </ul>
+                <div class="template-field">New metrics we'll track: ___&emsp;|&emsp;Board narrative drafted by: ___&emsp;|&emsp;KPI alignment date: ___</div>
+            </div>
+        </div>
+
+        <!-- PHASE 4: DISCOVERABILITY -->
+        <div class="strategy-phase">
+            <div class="phase-header">
+                <div class="phase-number p4">4</div>
+                <div class="phase-meta">
+                    <h3>Content &amp; Discoverability — The Website's Second Job</h3>
+                    <div class="phase-goal">How do we ensure AI systems cite our destination accurately?</div>
+                </div>
+            </div>
+            <div class="phase-body">
+                <p style="font-size:0.84rem;color:var(--slate);line-height:1.7;margin-bottom:14px;">Your website still matters — but it has a second job: being readable and citable by AI systems. AI doesn't care about your ad budget. It cares about whether your content is specific, authoritative, well-structured, and corroborated by credible third parties.</p>
+                <ul class="checklist">
+                    <li><span class="check"></span><strong>Audit your website schema.</strong> Are headers logical? Images tagged? Metadata complete? Use the AI Vision Simulator at jeanetterausch.com to see your site the way AI sees it.</li>
+                    <li><span class="check"></span><strong>Shift from "top 10 lists" to "infrequently asked questions."</strong> Generic content is now commoditized. Unique, specific, authoritative content gets cited by AI. Two hundred other sites have the same "Top 10 Things to Do" — yours will be invisible.</li>
+                    <li><span class="check"></span><strong>Invest in earned media as an AI investment.</strong> Third-party coverage in credible outlets is a credibility signal that AI systems weight heavily. If Town &amp; Country or a respected travel journalist writes about your destination, that carries far more weight in AI responses than your own content. PR budget = AI visibility budget.</li>
+                    <li><span class="check"></span><strong>Optimize for GEO (Generative Engine Optimization).</strong> Schema markup, structured data, clear meta tags — everything that helps AI read and categorize your content. This is the new SEO.</li>
+                    <li><span class="check"></span><strong>Be patient on AI visibility measurement.</strong> Tools claiming to measure AI visibility are largely unreliable today. The metrics will come when OpenAI's ad business needs to prove performance — just like Google's did. Focus on fundamentals you can control.</li>
+                </ul>
+                <div class="template-field">Website audit date: ___&emsp;|&emsp;Content gaps identified: ___&emsp;|&emsp;PR/AI alignment plan: ___</div>
+            </div>
+        </div>
+
+        <!-- PHASE 5: DATA INFRASTRUCTURE -->
+        <div class="strategy-phase">
+            <div class="phase-header">
+                <div class="phase-number p5">5</div>
+                <div class="phase-meta">
+                    <h3>Data Infrastructure — Destination as a Service</h3>
+                    <div class="phase-goal">How do we become the trusted source of truth for AI travel tools?</div>
+                </div>
+            </div>
+            <div class="phase-body">
+                <p style="font-size:0.84rem;color:var(--slate);line-height:1.7;margin-bottom:14px;">This is the aspirational layer — the "job nobody has budgeted" — and the biggest strategic opportunity. In the future, travelers' AIs will visit your <strong>data</strong>, not just your website. Organizations that structure and publish destination data for AI consumption become the source of truth. Those that wait get summarized by whoever got there first.</p>
+
+                <div class="section-label" style="margin-top:16px">The Three-Layer Roadmap</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">Y1</div>
+                        <div class="timeline-content">
+                            <h4>Content Layer — Do Now</h4>
+                            <p>Structured content on your website: clean schema, good metadata, organized information architecture. Unique storytelling with specific origins. This is table stakes and every DMO can start immediately.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">Y2</div>
+                        <div class="timeline-content">
+                            <h4>Integration Layer — Plan for FY27–28</h4>
+                            <p>Begin organizing destination data (events calendars, attraction hours, real-time closures, verified local recommendations) into structured formats that could feed an API or MCP server. You don't need to build the server yet — structure the data. Even small DMOs can start with a structured events feed.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">Y3</div>
+                        <div class="timeline-content">
+                            <h4>Transaction Layer — Monitor &amp; Prepare</h4>
+                            <p>AI-mediated commerce is coming within 12–18 months. Ensure your bookable inventory connects to distribution platforms (GetYourGuide, Viator) so when AI tools complete transactions, your destination is in the pipeline. Don't build custom infrastructure — ride the platforms.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-field">Y1 content audit start date: ___&emsp;|&emsp;Y2 data structuring lead: ___&emsp;|&emsp;Bookable inventory status: ___</div>
+            </div>
+        </div>
+
+        <!-- THE STRATEGIC QUESTION -->
+        <div class="highlight-box">
+            <h4>The Question Every DMO Should Answer</h4>
+            <p>When a traveler asks their AI "plan me a week in [your destination]," does your organization show up with accurate, rich, bookable information — or does the AI guess based on whatever third-party content it found first?</p>
+            <p style="margin-top:10px;">DMOs are uniquely positioned for this role. As nonprofit organizations, you carry inherent community trust. You can verify what's real — combating the bad actors on TikTok, the fake events, the AI-generated imagery of experiences that don't exist. <strong>Who is better served to be the source of truth about your destination than the destination marketing organization?</strong></p>
+        </div>
+
+        <!-- BRAND USA SUPPORT -->
+        <div class="section-label">Brand USA Resources to Support Your Strategy</div>
+        <div class="program-cards">
+            <div class="program-card">
+                <div class="program-num">01</div>
+                <h3>Agents of Change Webinar Series</h3>
+                <p>Monthly practical AI use cases for tourism. Free for the partner network. Share recordings with your full team — some partners host lunch-and-learns around them.</p>
+                <span class="program-tag">Available Now</span>
+            </div>
+            <div class="program-card p2">
+                <div class="program-num">02</div>
+                <h3>Weekly AI Adoption Email</h3>
+                <p>One concrete AI idea your team can act on each week. Builds organizational muscle memory without requiring dedicated training time.</p>
+                <span class="program-tag">Coming FY27</span>
+            </div>
+            <div class="program-card p3">
+                <div class="program-num">03</div>
+                <h3>Monthly Peer Networks</h3>
+                <p>Function-specific Zoom conversations — HR, Convention Sales, Digital Marketing — where peers share what's working. Real conversations by role.</p>
+                <span class="program-tag">Coming FY27</span>
+            </div>
+            <div class="program-card">
+                <div class="program-num">04</div>
+                <h3>Train the Trainer</h3>
+                <p>One AI champion identified and equipped at every organization. A distributed layer of internal advocates who drive adoption — including into small businesses in your destinations.</p>
+                <span class="program-tag">In Development</span>
+            </div>
+        </div>
+
+        <!-- FINAL TAKEAWAYS -->
+        <div class="takeaway-bar">
+            <h4>Start Here — This Week</h4>
+            <ul>
+                <li><strong>Name your AI champion</strong> — the one person who will own adoption at your organization and join the Train the Trainer program</li>
+                <li><strong>Ask each department one question:</strong> "What is your one biggest problem you'd like AI to help solve?"</li>
+                <li><strong>Audit your website</strong> through AI eyes — use the simulator or simply ask: are our headers, metadata, and schema clean?</li>
+                <li><strong>Draft a board narrative</strong> that reframes declining website traffic as evidence your content is being consumed by AI systems</li>
+                <li><strong>Start tracking AI citations</strong> — even informally — as a leading indicator of future discoverability</li>
+                <li><strong>Share Agents of Change recordings</strong> with your full team, especially outside marketing — HR, sales, operations all benefit</li>
+            </ul>
+        </div>
+
+    </div><!-- /panel-aistrategy -->
+
 </div><!-- /panels-day1-inner --></div><!-- /panels-day1 -->
 
 <div id="panels-day2" class="day-panels-wrap"><div class="panels">
@@ -1079,7 +1349,7 @@
             <div id="region-europe" class="region-panel active">
                 <div class="stat-cards">
                     <div class="stat-card"><div class="sc-num">40%</div><div class="sc-label">Europe's share of total overseas inbound visitation to the US</div></div>
-                    <div class="stat-card blue"><div class="sc-num">4.5M</div><div class="sc-label">UK visitors in 2025 — #1 overseas market; 2M+ more than #2</div></div>
+                    <div class="stat-card blue"><div class="sc-num">4.5M</div><div class="sc-label">UK &amp; Ireland visitors in 2025 — #1 overseas market; 2M+ more than #2</div></div>
                     <div class="stat-card"><div class="sc-num">1.2M</div><div class="sc-label">Italy visitors in 2025 — all-time record; up 5%</div></div>
                     <div class="stat-card navy"><div class="sc-num">+7–13%</div><div class="sc-label">GBP &amp; Euro appreciation vs. USD — improving affordability</div></div>
                 </div>
@@ -1087,9 +1357,9 @@
                 <div class="table-scroll"><table class="data-table">
                     <thead><tr><th>Market</th><th>2025 Trend</th><th>Key Metric</th><th>2026 Watch</th></tr></thead>
                     <tbody>
-                        <tr><td>🇬🇧 United Kingdom</td><td class="trend-up">↑ +1%</td><td>4.5M visitors</td><td>Double-digit forward bookings (Gold Medal, Kuoni, Travel Bag); "Super September" now extends to Q4</td></tr>
-                        <tr><td>🇮🇪 Ireland</td><td class="trend-up">↑ Growing</td><td>20 US gateways</td><td>2 new in 2026: Pittsburgh + Raleigh-Durham; also Indy, Nashville</td></tr>
-                        <tr><td>🇮🇹 Italy</td><td class="trend-up">↑ +5% Record</td><td>1.2M visitors</td><td>New gateways: Naples, Palermo, Sardinia; Rome–Seattle routes launched</td></tr>
+                        <tr><td>🇬🇧 United Kingdom</td><td class="trend-up">↑ +1%</td><td>Combined 4.5M w/ 🇮🇪</td><td>Double-digit forward bookings (Gold Medal, Kuoni, Travel Bag); "Super September" now extends to Q4</td></tr>
+                        <tr><td>🇮🇪 Ireland</td><td class="trend-up">↑ Growing</td><td>20 US gateways (Aer Lingus)</td><td>2 new in 2026: Pittsburgh + Raleigh-Durham; also Indy, Nashville</td></tr>
+                        <tr><td>🇮🇹 Italy</td><td class="trend-up">↑ +5% Record</td><td>1.2M visitors</td><td>New gateways: Naples, Palermo, Sardinia, Bari, Venice, Catania; Rome–Seattle routes launched</td></tr>
                         <tr><td>🇪🇸 Spain</td><td class="trend-up">↑ +1.5%</td><td>900K+</td><td>Strategy: introduce Spanish travelers to new US destinations beyond the usual</td></tr>
                         <tr><td>🇩🇪🇫🇷 Germany / France</td><td class="trend-down">↓ Softening</td><td>Declining</td><td>New Paris capacity/frequency; national parks fees a concern in Germany</td></tr>
                     </tbody>
@@ -1193,7 +1463,7 @@
                         <tr><td>🇮🇳 India</td><td class="trend-down">↓ -6%</td><td>2M+, #2 overseas market</td><td>-6% off a record +24% base year; leisure travel actually UP; GDP to $10T by 2032</td></tr>
                         <tr><td>🇯🇵 Japan</td><td class="trend-up">↑ Recovering</td><td>Consistent monthly</td><td>MLB/Ohtani hook; mainland expansion beyond Hawaii underway</td></tr>
                         <tr><td>🇰🇷 Korea</td><td class="trend-up">↑ Strong H2</td><td>Political recovery</td><td>New airlift (SLC, Newark); potential 2027 media mission pilot</td></tr>
-                        <tr><td>🇦🇺 Australia</td><td class="trend-down">↓ -6% arrivals</td><td>Revenues UP</td><td>Sentiment tough; behavior outperforms; new PR agency (Walter Group)</td></tr>
+                        <tr><td>🇦🇺 Australia</td><td class="trend-down">↓ -6% arrivals</td><td>Revenues UP</td><td>Sentiment tough; behavior outperforms; new PR agency (Walshe Group)</td></tr>
                         <tr><td>🌏 SE Asia</td><td class="trend-up">↑ Growing</td><td>New airlift</td><td>United aggressive expansion; small mission April 2026; Asia Pacific Travel Week 2028 possible</td></tr>
                     </tbody>
                 </table></div>
@@ -1228,7 +1498,7 @@
                 <div class="section-label">Australia — Behavior Outperforming Sentiment</div>
                 <div class="insights-grid">
                     <div class="insight-box"><div class="insight-icon">🏈</div><h4>Sports Driving Awareness</h4><p>NFL heading to Australia. NBA/NFL merchandise extremely visible on streets. ZIP Air doing Tokyo–Orlando charters packaged with Disney. Sports as a cultural bridge to travel.</p></div>
-                    <div class="insight-box"><div class="insight-icon">📣</div><h4>New PR Agency: Walter Group</h4><p>Also works with Delta. Gate 7 continuing on trade side. Brand USA in Australia this weekend: IMN media marketplace, Global Entry facilitation with CBP, B2B trade event (50+ attendees).</p></div>
+                    <div class="insight-box"><div class="insight-icon">📣</div><h4>New PR Agency: Walshe Group</h4><p>Also works with Delta. Gate 7 continuing on trade side. Brand USA in Australia this weekend: IMM media marketplace, Global Entry facilitation with CBP, B2B trade event (50+ US partners).</p></div>
                 </div>
 
                 <div class="takeaway-bar">
@@ -1297,7 +1567,7 @@
             <div id="region-mexico" class="region-panel">
                 <div class="stat-cards">
                     <div class="stat-card"><div class="sc-num">#1</div><div class="sc-label">Mexico is now Brand USA's #1 international inbound market</div></div>
-                    <div class="stat-card blue"><div class="sc-num">+9%</div><div class="sc-label">Growth in 2025 — 1.2 million visitors</div></div>
+                    <div class="stat-card blue"><div class="sc-num">18.5M</div><div class="sc-label">Total Mexico visitors in 2025 — up 1.2M vs. prior year</div></div>
                     <div class="stat-card"><div class="sc-num">&gt;25%</div><div class="sc-label">Of all US international visitation — over a quarter of the market</div></div>
                     <div class="stat-card navy"><div class="sc-num">33</div><div class="sc-label">Volaris direct routes to US in 2026 — 11 brand new</div></div>
                 </div>
